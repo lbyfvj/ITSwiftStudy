@@ -5,45 +5,64 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - FacebookCore (0.1.0.1):
+  - FacebookCore (0.2.0):
     - Bolts (~> 1.8)
-    - FBSDKCoreKit (~> 4.14)
-  - FacebookLogin (0.1.0):
+    - FBSDKCoreKit (~> 4.21)
+  - FacebookLogin (0.2.0):
     - Bolts (~> 1.8)
-    - FacebookCore
-    - FBSDKCoreKit (~> 4.14)
-    - FBSDKLoginKit (~> 4.14)
-  - FacebookShare (0.1.0):
+    - FacebookCore (~> 0.2)
+    - FBSDKCoreKit (~> 4.21)
+    - FBSDKLoginKit (~> 4.21)
+  - FacebookShare (0.2.0):
     - Bolts (~> 1.8)
-    - FacebookCore
-    - FBSDKCoreKit (~> 4.14)
-    - FBSDKShareKit (~> 4.14)
-  - FBSDKCoreKit (4.14.0):
+    - FacebookCore (~> 0.2)
+    - FBSDKCoreKit (~> 4.21)
+    - FBSDKShareKit (~> 4.21)
+  - FBSDKCoreKit (4.22.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.14.0):
+  - FBSDKLoginKit (4.22.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.14.0):
+  - FBSDKShareKit (4.22.0):
     - FBSDKCoreKit
   - MagicalRecord (2.3.2):
     - MagicalRecord/Core (= 2.3.2)
   - MagicalRecord/Core (2.3.2)
 
 DEPENDENCIES:
-  - FacebookCore
-  - FacebookLogin
-  - FacebookShare
+  - FacebookCore (from `https://github.com/facebook/facebook-sdk-swift`)
+  - FacebookLogin (from `https://github.com/facebook/facebook-sdk-swift`)
+  - FacebookShare (from `https://github.com/facebook/facebook-sdk-swift`)
   - MagicalRecord
+
+EXTERNAL SOURCES:
+  FacebookCore:
+    :git: https://github.com/facebook/facebook-sdk-swift
+  FacebookLogin:
+    :git: https://github.com/facebook/facebook-sdk-swift
+  FacebookShare:
+    :git: https://github.com/facebook/facebook-sdk-swift
+
+CHECKOUT OPTIONS:
+  FacebookCore:
+    :commit: a09021edf33417153fdf1066275f888c3b59fc6e
+    :git: https://github.com/facebook/facebook-sdk-swift
+  FacebookLogin:
+    :commit: a09021edf33417153fdf1066275f888c3b59fc6e
+    :git: https://github.com/facebook/facebook-sdk-swift
+  FacebookShare:
+    :commit: a09021edf33417153fdf1066275f888c3b59fc6e
+    :git: https://github.com/facebook/facebook-sdk-swift
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  FacebookCore: e6468c7aa0950bf5086ffc5f393d79f70d12587b
-  FacebookLogin: f8bfb1dcb02716c5be7190a73b3c1c06065a1312
-  FacebookShare: 58ed1d9bfa331ab9d9c24540c3d1616215e9c63e
-  FBSDKCoreKit: 6e020b5db0b5bd1e01f5fb0902131befd129a502
-  FBSDKLoginKit: da563567a108050ef83739c8c8c001ee9e25fa13
-  FBSDKShareKit: e8e5d4ccef69b41132fe33acda26db1e33143e33
+  FacebookCore: b1dfb5bba65380aba6dbe5c545ce02d03d0b59b2
+  FacebookLogin: da4d16833831769a6827a4ddfcf439d673949f12
+  FacebookShare: d086f7a4610bbbca9cec5e774de450a9b3e1a20b
+  FBSDKCoreKit: c693bad19feb225469eeff14452ba364522ee48b
+  FBSDKLoginKit: 1fa529fc622d7b32ebeaffbecd377180833c6d30
+  FBSDKShareKit: 21ab3c8d173f4fa20c47c1061f3a9fac5950b5fa
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
 
-PODFILE CHECKSUM: b539f0d5491d8e270492183614437a92290c0467
+PODFILE CHECKSUM: b771f64dc90f728fbafd48e7c78acf8a069b892f
 
 COCOAPODS: 1.1.1

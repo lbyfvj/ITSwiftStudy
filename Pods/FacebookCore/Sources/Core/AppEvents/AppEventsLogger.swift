@@ -83,7 +83,7 @@ public class AppEventsLogger {
 
    - parameter application: Optional instance of UIApplication. Default: `UIApplication.sharedApplication()`.
    */
-  public static func activate(application: UIApplication = UIApplication.sharedApplication()) {
+  public static func activate(_ application: UIApplication = UIApplication.shared) {
     FBSDKAppEvents.activateApp()
   }
 
@@ -97,8 +97,8 @@ public class AppEventsLogger {
    - parameter event:       The application event to log.
    - parameter accessToken: Optional access token to use to log the event. Default: `AccessToken.current`.
    */
-  public static func log(event: AppEventLoggable, accessToken: AccessToken? = AccessToken.current) {
-    let valueToSum = event.valueToSum.map({ NSNumber(double:$0 ) })
+  public static func log(_ event: AppEventLoggable, accessToken: AccessToken? = AccessToken.current) {
+    let valueToSum = event.valueToSum.map({ NSNumber(value: $0 as Double) })
     let parameters = event.parameters.keyValueMap {
       ($0.0.rawValue as NSString, $0.1.appEventParameterValue)
     }
@@ -119,7 +119,7 @@ public class AppEventsLogger {
    - parameter event:       The application event to log.
    - parameter accessToken: Optional access token to use to log the event. Default: `AccessToken.current`.
    */
-  public static func log(event: AppEvent, accessToken: AccessToken? = AccessToken.current) {
+  public static func log(_ event: AppEvent, accessToken: AccessToken? = AccessToken.current) {
     log(event as AppEventLoggable, accessToken: accessToken)
   }
 
@@ -132,12 +132,25 @@ public class AppEventsLogger {
    the cumulative and average value of this amount.
    - parameter accessToken: The optional access token to log the event as. Default: `AccessToken.current`.
    */
-  public static func log(eventName: String,
+  public static func log(_ eventName: String,
                          parameters: AppEvent.ParametersDictionary = [:],
                          valueToSum: Double? = nil,
                          accessToken: AccessToken? = AccessToken.current) {
     let event = AppEvent(name: AppEventName(eventName), parameters: parameters, valueToSum: valueToSum)
     log(event, accessToken: accessToken)
+  }
+
+  //--------------------------------------
+  // MARK: - Push Notifications
+  //--------------------------------------
+
+  /**
+   Sets a device token to register the current application installation for push notifications.
+   */
+  public static var pushNotificationsDeviceToken: Data? {
+    didSet{
+      FBSDKAppEvents.setPushNotificationsDeviceToken(pushNotificationsDeviceToken)
+    }
   }
 
   //--------------------------------------
@@ -187,5 +200,41 @@ public class AppEventsLogger {
     set {
       return FBSDKAppEvents.setLoggingOverrideAppID(newValue)
     }
+  }
+
+  //--------------------------------------
+  // MARK: - User Id
+  //--------------------------------------
+
+  ///
+  /// A custom user identifier to associate with all app events.
+  /// The `userId` is persisted until it is cleared by passing `nil`.
+  ///
+  public static var userId: String? {
+    get {
+      return FBSDKAppEvents.userID() as String?
+    }
+    set {
+      FBSDKAppEvents.setUserID(userId)
+    }
+  }
+
+  //--------------------------------------
+  // MARK: - User Parameters
+  //--------------------------------------
+
+  /**
+   Sends a request to update the properties for the current user, set by `AppEventsLogger.userId`.
+
+   - properties: A dictionary of key-value pairs representing user properties and their values.
+   Values should be strings or numbers only. Each key must be less than 40 character in length,
+   and the key can contain only letters, number, whitespace, hyphens (`-`), or underscores (`_`).
+   Each value must be less than 100 characters.
+   - completion: Optional completion closure that is going to be called when the request finishes or fails.
+   */
+  public static func updateUserProperties(_ properties: [String : Any],
+                                          completion: @escaping (_ httpResponse: HTTPURLResponse?, _ result: GraphRequestResult<GraphRequest>) -> Void) {
+    FBSDKAppEvents.updateUserProperties(properties,
+                                        handler: GraphRequestConnection.sdkRequestCompletion(from: completion))
   }
 }

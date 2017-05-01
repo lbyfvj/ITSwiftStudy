@@ -10,7 +10,6 @@
 		93B469511EB7C1830080C4F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B469501EB7C1830080C4F5 /* AppDelegate.swift */; };
 		93B4696C1EB7C4310080C4F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93B469631EB7C4310080C4F5 /* Assets.xcassets */; };
 		93B4696D1EB7C4310080C4F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B469641EB7C4310080C4F5 /* LaunchScreen.storyboard */; };
-		93B4696E1EB7C4310080C4F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B469661EB7C4310080C4F5 /* Main.storyboard */; };
 		BDC3016EDAFE1DFBA24F9030 /* Pods_ITSwiftStudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACC627F77454E1517B59D58F /* Pods_ITSwiftStudy.framework */; };
 /* End PBXBuildFile section */
 
@@ -20,7 +19,7 @@
 		93B4695C1EB7C1830080C4F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93B469631EB7C4310080C4F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		93B469651EB7C4310080C4F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		93B469671EB7C4310080C4F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		93B4696F1EB7C5810080C4F5 /* ITSwiftStudy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ITSwiftStudy-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACC627F77454E1517B59D58F /* Pods_ITSwiftStudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ITSwiftStudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE7E9CA10A112878D8B5C53B /* Pods-ITSwiftStudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ITSwiftStudy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ITSwiftStudy/Pods-ITSwiftStudy.debug.xcconfig"; sourceTree = "<group>"; };
 		EEB36CF558C795F9E52A81F6 /* Pods-ITSwiftStudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ITSwiftStudy.release.xcconfig"; path = "Pods/Target Support Files/Pods-ITSwiftStudy/Pods-ITSwiftStudy.release.xcconfig"; sourceTree = "<group>"; };
@@ -72,6 +71,7 @@
 			children = (
 				93B469501EB7C1830080C4F5 /* AppDelegate.swift */,
 				93B4695C1EB7C1830080C4F5 /* Info.plist */,
+				93B4696F1EB7C5810080C4F5 /* ITSwiftStudy-Bridging-Header.h */,
 			);
 			path = ITSwiftStudy;
 			sourceTree = "<group>";
@@ -81,7 +81,6 @@
 			children = (
 				93B469631EB7C4310080C4F5 /* Assets.xcassets */,
 				93B469641EB7C4310080C4F5 /* LaunchScreen.storyboard */,
-				93B469661EB7C4310080C4F5 /* Main.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -161,6 +160,7 @@
 					93B4694C1EB7C1830080C4F5 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 2TPE62FV94;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -188,7 +188,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				93B4696E1EB7C4310080C4F5 /* Main.storyboard in Resources */,
 				93B4696C1EB7C4310080C4F5 /* Assets.xcassets in Resources */,
 				93B4696D1EB7C4310080C4F5 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -262,14 +261,6 @@
 				93B469651EB7C4310080C4F5 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		93B469661EB7C4310080C4F5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				93B469671EB7C4310080C4F5 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -373,11 +364,14 @@
 			baseConfigurationReference = CE7E9CA10A112878D8B5C53B /* Pods-ITSwiftStudy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 2TPE62FV94;
 				INFOPLIST_FILE = ITSwiftStudy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = IT.ITSwiftStudy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ITSwiftStudy/ITSwiftStudy-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -387,11 +381,13 @@
 			baseConfigurationReference = EEB36CF558C795F9E52A81F6 /* Pods-ITSwiftStudy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 2TPE62FV94;
 				INFOPLIST_FILE = ITSwiftStudy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = IT.ITSwiftStudy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ITSwiftStudy/ITSwiftStudy-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
