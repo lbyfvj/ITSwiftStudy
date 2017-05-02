@@ -7,6 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		934903CE1EB7CA0500589868 /* ITSwiftStudyApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 934903CC1EB7CA0500589868 /* ITSwiftStudyApp.xcdatamodeld */; };
+		934903D31EB7CAA600589868 /* ITDBImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934903CF1EB7CAA600589868 /* ITDBImage.swift */; };
+		934903D51EB7CAA600589868 /* ITDBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934903D11EB7CAA600589868 /* ITDBUser.swift */; };
+		934903DA1EB7CAEB00589868 /* ITLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934903D81EB7CAEB00589868 /* ITLoginViewController.swift */; };
+		934903DB1EB7CAEB00589868 /* ITLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 934903D91EB7CAEB00589868 /* ITLoginViewController.xib */; };
+		934903DF1EB7CBBD00589868 /* UIWindow+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934903DE1EB7CBBD00589868 /* UIWindow+ITExtensions.swift */; };
+		934903E11EB7D07C00589868 /* ITLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934903E01EB7D07C00589868 /* ITLoginView.swift */; };
+		935A24AC1EB91ED0004719CC /* ITUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24AA1EB91ED0004719CC /* ITUsersViewController.swift */; };
+		935A24AD1EB91ED0004719CC /* ITUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 935A24AB1EB91ED0004719CC /* ITUsersViewController.xib */; };
+		935A24AF1EB91EE9004719CC /* ITUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24AE1EB91EE9004719CC /* ITUsersView.swift */; };
+		935A24BA1EB9352D004719CC /* ITTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24B91EB9352D004719CC /* ITTableViewCell.swift */; };
+		935A24C11EB93629004719CC /* ITFBUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24BF1EB93629004719CC /* ITFBUserCell.swift */; };
+		935A24C21EB93629004719CC /* ITFBUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 935A24C01EB93629004719CC /* ITFBUserCell.xib */; };
+		935A24C51EB936BC004719CC /* UITableView+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24C41EB936BC004719CC /* UITableView+ITExtensions.swift */; };
+		935A24C81EB937A5004719CC /* UINib+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24C71EB937A5004719CC /* UINib+ITExtensions.swift */; };
 		93B469511EB7C1830080C4F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B469501EB7C1830080C4F5 /* AppDelegate.swift */; };
 		93B4696C1EB7C4310080C4F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93B469631EB7C4310080C4F5 /* Assets.xcassets */; };
 		93B4696D1EB7C4310080C4F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B469641EB7C4310080C4F5 /* LaunchScreen.storyboard */; };
@@ -14,6 +29,21 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		934903CD1EB7CA0500589868 /* ITSwiftStudyApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ITSwiftStudyApp.xcdatamodel; sourceTree = "<group>"; };
+		934903CF1EB7CAA600589868 /* ITDBImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITDBImage.swift; sourceTree = "<group>"; };
+		934903D11EB7CAA600589868 /* ITDBUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITDBUser.swift; sourceTree = "<group>"; };
+		934903D81EB7CAEB00589868 /* ITLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITLoginViewController.swift; sourceTree = "<group>"; };
+		934903D91EB7CAEB00589868 /* ITLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ITLoginViewController.xib; sourceTree = "<group>"; };
+		934903DE1EB7CBBD00589868 /* UIWindow+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWindow+ITExtensions.swift"; sourceTree = "<group>"; };
+		934903E01EB7D07C00589868 /* ITLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITLoginView.swift; sourceTree = "<group>"; };
+		935A24AA1EB91ED0004719CC /* ITUsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITUsersViewController.swift; sourceTree = "<group>"; };
+		935A24AB1EB91ED0004719CC /* ITUsersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ITUsersViewController.xib; sourceTree = "<group>"; };
+		935A24AE1EB91EE9004719CC /* ITUsersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITUsersView.swift; sourceTree = "<group>"; };
+		935A24B91EB9352D004719CC /* ITTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITTableViewCell.swift; sourceTree = "<group>"; };
+		935A24BF1EB93629004719CC /* ITFBUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITFBUserCell.swift; sourceTree = "<group>"; };
+		935A24C01EB93629004719CC /* ITFBUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ITFBUserCell.xib; sourceTree = "<group>"; };
+		935A24C41EB936BC004719CC /* UITableView+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+ITExtensions.swift"; sourceTree = "<group>"; };
+		935A24C71EB937A5004719CC /* UINib+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINib+ITExtensions.swift"; sourceTree = "<group>"; };
 		93B4694D1EB7C1830080C4F5 /* ITSwiftStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ITSwiftStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93B469501EB7C1830080C4F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93B4695C1EB7C1830080C4F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -44,6 +74,111 @@
 				EEB36CF558C795F9E52A81F6 /* Pods-ITSwiftStudy.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		934903CB1EB7C9F900589868 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				934903D11EB7CAA600589868 /* ITDBUser.swift */,
+				934903CF1EB7CAA600589868 /* ITDBImage.swift */,
+				934903CC1EB7CA0500589868 /* ITSwiftStudyApp.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		934903D71EB7CAD600589868 /* ITLoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				934903E01EB7D07C00589868 /* ITLoginView.swift */,
+				934903D81EB7CAEB00589868 /* ITLoginViewController.swift */,
+				934903D91EB7CAEB00589868 /* ITLoginViewController.xib */,
+			);
+			path = ITLoginViewController;
+			sourceTree = "<group>";
+		};
+		934903DC1EB7CBA000589868 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				935A24C61EB93793004719CC /* UINib+ITExtensions */,
+				935A24C31EB9369E004719CC /* UITableView+ITExtensions */,
+				934903DD1EB7CBA000589868 /* UIWindow+ITExtensions */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		934903DD1EB7CBA000589868 /* UIWindow+ITExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				934903DE1EB7CBBD00589868 /* UIWindow+ITExtensions.swift */,
+			);
+			path = "UIWindow+ITExtensions";
+			sourceTree = "<group>";
+		};
+		935A24A91EB91EBB004719CC /* ITUsersViewController */ = {
+			isa = PBXGroup;
+			children = (
+				935A24AE1EB91EE9004719CC /* ITUsersView.swift */,
+				935A24AA1EB91ED0004719CC /* ITUsersViewController.swift */,
+				935A24AB1EB91ED0004719CC /* ITUsersViewController.xib */,
+				935A24B31EB93487004719CC /* Views */,
+			);
+			path = ITUsersViewController;
+			sourceTree = "<group>";
+		};
+		935A24B01EB933EB004719CC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		935A24B31EB93487004719CC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				935A24B41EB934AD004719CC /* ITFBUserCell */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		935A24B41EB934AD004719CC /* ITFBUserCell */ = {
+			isa = PBXGroup;
+			children = (
+				935A24BF1EB93629004719CC /* ITFBUserCell.swift */,
+				935A24C01EB93629004719CC /* ITFBUserCell.xib */,
+			);
+			path = ITFBUserCell;
+			sourceTree = "<group>";
+		};
+		935A24B71EB9352D004719CC /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				935A24B81EB9352D004719CC /* ITTableViewCell */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		935A24B81EB9352D004719CC /* ITTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				935A24B91EB9352D004719CC /* ITTableViewCell.swift */,
+			);
+			path = ITTableViewCell;
+			sourceTree = "<group>";
+		};
+		935A24C31EB9369E004719CC /* UITableView+ITExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				935A24C41EB936BC004719CC /* UITableView+ITExtensions.swift */,
+			);
+			path = "UITableView+ITExtensions";
+			sourceTree = "<group>";
+		};
+		935A24C61EB93793004719CC /* UINib+ITExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				935A24C71EB937A5004719CC /* UINib+ITExtensions.swift */,
+			);
+			path = "UINib+ITExtensions";
 			sourceTree = "<group>";
 		};
 		93B469441EB7C1830080C4F5 = {
@@ -98,6 +233,8 @@
 		93B469691EB7C4310080C4F5 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				934903DC1EB7CBA000589868 /* Categories */,
+				935A24B71EB9352D004719CC /* Classes */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -105,6 +242,7 @@
 		93B4696A1EB7C4310080C4F5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				934903CB1EB7C9F900589868 /* CoreData */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -112,6 +250,9 @@
 		93B4696B1EB7C4310080C4F5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				935A24A91EB91EBB004719CC /* ITUsersViewController */,
+				934903D71EB7CAD600589868 /* ITLoginViewController */,
+				935A24B01EB933EB004719CC /* Views */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -188,8 +329,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				935A24AD1EB91ED0004719CC /* ITUsersViewController.xib in Resources */,
 				93B4696C1EB7C4310080C4F5 /* Assets.xcassets in Resources */,
+				935A24C21EB93629004719CC /* ITFBUserCell.xib in Resources */,
 				93B4696D1EB7C4310080C4F5 /* LaunchScreen.storyboard in Resources */,
+				934903DB1EB7CAEB00589868 /* ITLoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +392,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				935A24C81EB937A5004719CC /* UINib+ITExtensions.swift in Sources */,
+				934903CE1EB7CA0500589868 /* ITSwiftStudyApp.xcdatamodeld in Sources */,
+				934903DA1EB7CAEB00589868 /* ITLoginViewController.swift in Sources */,
+				934903D31EB7CAA600589868 /* ITDBImage.swift in Sources */,
+				934903E11EB7D07C00589868 /* ITLoginView.swift in Sources */,
+				935A24BA1EB9352D004719CC /* ITTableViewCell.swift in Sources */,
+				935A24AC1EB91ED0004719CC /* ITUsersViewController.swift in Sources */,
+				935A24C51EB936BC004719CC /* UITableView+ITExtensions.swift in Sources */,
+				934903DF1EB7CBBD00589868 /* UIWindow+ITExtensions.swift in Sources */,
+				935A24AF1EB91EE9004719CC /* ITUsersView.swift in Sources */,
+				934903D51EB7CAA600589868 /* ITDBUser.swift in Sources */,
+				935A24C11EB93629004719CC /* ITFBUserCell.swift in Sources */,
 				93B469511EB7C1830080C4F5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -363,6 +519,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CE7E9CA10A112878D8B5C53B /* Pods-ITSwiftStudy.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 2TPE62FV94;
@@ -380,6 +537,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EEB36CF558C795F9E52A81F6 /* Pods-ITSwiftStudy.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 2TPE62FV94;
@@ -414,6 +572,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		934903CC1EB7CA0500589868 /* ITSwiftStudyApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				934903CD1EB7CA0500589868 /* ITSwiftStudyApp.xcdatamodel */,
+			);
+			currentVersion = 934903CD1EB7CA0500589868 /* ITSwiftStudyApp.xcdatamodel */;
+			path = ITSwiftStudyApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 93B469451EB7C1830080C4F5 /* Project object */;
 }
