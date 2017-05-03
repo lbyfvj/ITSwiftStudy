@@ -13,10 +13,18 @@ import FacebookCore
 
 let kITLogoutButtonTitle = "Logout"
 
-class ITUsersViewController: UIViewController {
+class ITUsersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var user:       ITDBUser?
+    var user: ITDBUser?
     var graphRequestConnection: GraphRequestConnection?
+    
+    var usersView: ITUsersView? {
+        if isViewLoaded && (view is ITUsersView) {
+            return (view as? ITUsersView)!
+        }
+        
+        return nil
+    }
     
     // MARK: -
     // MARK: Accessors
@@ -24,6 +32,10 @@ class ITUsersViewController: UIViewController {
     func setGraphRequestConnection(_ graphRequestConnection: GraphRequestConnection) {
         self.graphRequestConnection?.cancel()
         self.graphRequestConnection = graphRequestConnection
+    }
+    
+    func accessToken() -> AccessToken? {
+        return AccessToken.current
     }
     
     func graphPath() -> String {
@@ -62,7 +74,8 @@ class ITUsersViewController: UIViewController {
         
         for object in results {
             let friend: ITDBUser = self.parse(object: object )
-                user?.friends?.append(friend)
+                //user?.friends.append(friend)
+            user?.friends = NSSet.init(object: friend)
         }
         
         user?.saveManagedObject()
@@ -117,7 +130,8 @@ class ITUsersViewController: UIViewController {
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.user!.friends!.count
+        print("Friends count: \(String(describing: self.user?.friends.count))")
+        return self.user!.friends.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -20,7 +20,8 @@ public class ITDBUser: NSManagedObject {
     @NSManaged var id: String?
     @NSManaged var firstName: String?
     @NSManaged var lastName: String?
-    @NSManaged var friends: Array<Any>?
+    @NSManaged var friends: NSSet
+    //@NSManaged var friendsArray: [ITDBUser]
 
     class func user() -> ITDBUser? {
         let accessToken = AccessToken.current
@@ -44,7 +45,11 @@ public class ITDBUser: NSManagedObject {
     }
     
     func saveManagedObject() {
-        MagicalRecord.save(blockAndWait: { (localContext: NSManagedObjectContext) in
+        
+        MagicalRecord.save({ (localContext: NSManagedObjectContext!) in
+            
+        }, completion: {
+            (MRSaveCompletionHandler) in
             
         })
     }
