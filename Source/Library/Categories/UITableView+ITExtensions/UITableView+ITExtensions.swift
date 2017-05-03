@@ -17,7 +17,8 @@ extension UITableView {
     func reusableCell(with cls: AnyClass) -> Any {
         var cell: Any? = dequeueReusableCell(with: cls)
         if cell == nil {
-            cell = UINib.object(withClass: cls)
+            cell = UINib.object(with: cls)
+            
         }
         return cell!
     }

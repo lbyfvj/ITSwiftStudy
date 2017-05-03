@@ -16,7 +16,27 @@ let kITLogoutButtonTitle = "Logout"
 class ITUsersViewController: UIViewController {
     
     var user:       ITDBUser?
-    var friends:    Array<Any>?
+    var graphRequestConnection: GraphRequestConnection?
+    
+    // MARK: -
+    // MARK: Accessors
+    
+    func setGraphRequestConnection(_ graphRequestConnection: GraphRequestConnection) {
+        self.graphRequestConnection?.cancel()
+        self.graphRequestConnection = graphRequestConnection
+    }
+    
+    func graphPath() -> String {
+        return "\(user!.id ?? "")/\(kITFriends)"
+    }
+    
+    func requestParameters() -> [String: Any] {
+        return [kITFields: "\(kITId), \(kITFirstName), \(kITLastName), \(kITLargePicture)"]
+    }
+    
+    func graphRequest() -> GraphRequest {
+        return GraphRequest(graphPath: graphPath(), parameters: requestParameters())
+    }
     
     // MARK: -
     // MARK: Private
@@ -26,8 +46,52 @@ class ITUsersViewController: UIViewController {
         navigationController?.popToRootViewController(animated: true)
     }
     
+    func parse(object: [String : AnyObject]) -> ITDBUser {
+        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
+        
+        let user: ITDBUser? = ITDBUser.user(with: object[kITId]! as! String)
+        user?.firstName = object[kITFirstName] as? String
+        user?.lastName = object[kITLastName] as? String
+        //user?.picture = ITDBImage.managedObject(withID: object[kITPicture][kITData][kITURL])
+        
+        return user!
+    }
+    
+    func resultsHandler(_ results: [[String : AnyObject]]) {
+        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
+        
+        for object in results {
+            let friend: ITDBUser = self.parse(object: object )
+                user?.friends?.append(friend)
+        }
+        
+        user?.saveManagedObject()
+    }
+    
     func loadFriends() {
+        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
 
+        graphRequestConnection = GraphRequestConnection()
+        graphRequestConnection?.add(graphRequest()) { httpResponse, result in
+            switch result {
+            case .success(let response):
+                if let responseDictionary = response.dictionaryValue {
+                    print(responseDictionary)
+                    if let dictianary = responseDictionary[kITData] as? [[String : AnyObject]] {
+                        self.resultsHandler(dictianary)
+                    }
+                }
+            case .failed(let error):
+                print("Graph Request Failed: \(error)")
+                self.failedLoadingData()
+            }
+        }
+            
+        graphRequestConnection?.start()
+    }
+    
+    func failedLoadingData() {
+        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
     }
     
     // MARK: -
@@ -51,13 +115,14 @@ class ITUsersViewController: UIViewController {
     
     // MARK: -
     // MARK: UITableViewDataSource
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return friends.count
+        return self.user!.friends!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.reusableCell(with: ITFBUserCell.self)
-        let user: ITDBUser? = friends[indexPath.row]
+        //let user: ITDBUser? = friends[indexPath.row]
         //cell.fill(withUserModel: user)
         return cell as! ITFBUserCell
     }

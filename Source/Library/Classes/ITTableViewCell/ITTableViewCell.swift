@@ -13,7 +13,7 @@ class ITTableViewCell: UITableViewCell {
     // MARK: -
     // MARK: Accessors
     
-    func reuseIdentifier() -> String {
+    func cellReuseIdentifier() -> String {
         return NSStringFromClass(type(of: self))
     }
 

@@ -21,7 +21,14 @@
 		935A24C11EB93629004719CC /* ITFBUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24BF1EB93629004719CC /* ITFBUserCell.swift */; };
 		935A24C21EB93629004719CC /* ITFBUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 935A24C01EB93629004719CC /* ITFBUserCell.xib */; };
 		935A24C51EB936BC004719CC /* UITableView+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24C41EB936BC004719CC /* UITableView+ITExtensions.swift */; };
-		935A24C81EB937A5004719CC /* UINib+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24C71EB937A5004719CC /* UINib+ITExtensions.swift */; };
+		935A24CC1EB9C77F004719CC /* NSBundle+ITExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24CB1EB9C77F004719CC /* NSBundle+ITExtensions.m */; };
+		935A24D01EB9C7B0004719CC /* NSArray+ITExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24CF1EB9C7B0004719CC /* NSArray+ITExtensions.m */; };
+		935A24D41EB9C81C004719CC /* UINib+ITExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24D31EB9C81C004719CC /* UINib+ITExtensions.m */; };
+		935A24D81EB9CA15004719CC /* ITJSONRepresentation+ITExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24D71EB9CA15004719CC /* ITJSONRepresentation+ITExtensions.m */; };
+		935A24DC1EB9CB36004719CC /* ITFBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24DB1EB9CB36004719CC /* ITFBConstants.m */; };
+		935A24E41EB9CB71004719CC /* ITBlockVariablesMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24DF1EB9CB71004719CC /* ITBlockVariablesMacro.m */; };
+		935A24E51EB9CB71004719CC /* ITCompilerMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24E11EB9CB71004719CC /* ITCompilerMacro.m */; };
+		935A24E61EB9CB71004719CC /* ITMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24E31EB9CB71004719CC /* ITMacro.m */; };
 		93B469511EB7C1830080C4F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B469501EB7C1830080C4F5 /* AppDelegate.swift */; };
 		93B4696C1EB7C4310080C4F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93B469631EB7C4310080C4F5 /* Assets.xcassets */; };
 		93B4696D1EB7C4310080C4F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B469641EB7C4310080C4F5 /* LaunchScreen.storyboard */; };
@@ -43,7 +50,22 @@
 		935A24BF1EB93629004719CC /* ITFBUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITFBUserCell.swift; sourceTree = "<group>"; };
 		935A24C01EB93629004719CC /* ITFBUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ITFBUserCell.xib; sourceTree = "<group>"; };
 		935A24C41EB936BC004719CC /* UITableView+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+ITExtensions.swift"; sourceTree = "<group>"; };
-		935A24C71EB937A5004719CC /* UINib+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINib+ITExtensions.swift"; sourceTree = "<group>"; };
+		935A24CA1EB9C77F004719CC /* NSBundle+ITExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+ITExtensions.h"; sourceTree = "<group>"; };
+		935A24CB1EB9C77F004719CC /* NSBundle+ITExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+ITExtensions.m"; sourceTree = "<group>"; };
+		935A24CE1EB9C7B0004719CC /* NSArray+ITExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ITExtensions.h"; sourceTree = "<group>"; };
+		935A24CF1EB9C7B0004719CC /* NSArray+ITExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ITExtensions.m"; sourceTree = "<group>"; };
+		935A24D21EB9C81C004719CC /* UINib+ITExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINib+ITExtensions.h"; sourceTree = "<group>"; };
+		935A24D31EB9C81C004719CC /* UINib+ITExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINib+ITExtensions.m"; sourceTree = "<group>"; };
+		935A24D61EB9CA15004719CC /* ITJSONRepresentation+ITExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ITJSONRepresentation+ITExtensions.h"; sourceTree = "<group>"; };
+		935A24D71EB9CA15004719CC /* ITJSONRepresentation+ITExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ITJSONRepresentation+ITExtensions.m"; sourceTree = "<group>"; };
+		935A24DA1EB9CB36004719CC /* ITFBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITFBConstants.h; sourceTree = "<group>"; };
+		935A24DB1EB9CB36004719CC /* ITFBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITFBConstants.m; sourceTree = "<group>"; };
+		935A24DE1EB9CB71004719CC /* ITBlockVariablesMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBlockVariablesMacro.h; sourceTree = "<group>"; };
+		935A24DF1EB9CB71004719CC /* ITBlockVariablesMacro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBlockVariablesMacro.m; sourceTree = "<group>"; };
+		935A24E01EB9CB71004719CC /* ITCompilerMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITCompilerMacro.h; sourceTree = "<group>"; };
+		935A24E11EB9CB71004719CC /* ITCompilerMacro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITCompilerMacro.m; sourceTree = "<group>"; };
+		935A24E21EB9CB71004719CC /* ITMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITMacro.h; sourceTree = "<group>"; };
+		935A24E31EB9CB71004719CC /* ITMacro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITMacro.m; sourceTree = "<group>"; };
 		93B4694D1EB7C1830080C4F5 /* ITSwiftStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ITSwiftStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93B469501EB7C1830080C4F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93B4695C1EB7C1830080C4F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -99,7 +121,10 @@
 		934903DC1EB7CBA000589868 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				935A24C61EB93793004719CC /* UINib+ITExtensions */,
+				935A24D51EB9CA15004719CC /* ITJSONRepresentation */,
+				935A24D11EB9C81C004719CC /* UINib+ITExtensions */,
+				935A24CD1EB9C7B0004719CC /* NSArray+ITExtensions */,
+				935A24C91EB9C77F004719CC /* NSBundle+ITExtensions */,
 				935A24C31EB9369E004719CC /* UITableView+ITExtensions */,
 				934903DD1EB7CBA000589868 /* UIWindow+ITExtensions */,
 			);
@@ -173,12 +198,62 @@
 			path = "UITableView+ITExtensions";
 			sourceTree = "<group>";
 		};
-		935A24C61EB93793004719CC /* UINib+ITExtensions */ = {
+		935A24C91EB9C77F004719CC /* NSBundle+ITExtensions */ = {
 			isa = PBXGroup;
 			children = (
-				935A24C71EB937A5004719CC /* UINib+ITExtensions.swift */,
+				935A24CA1EB9C77F004719CC /* NSBundle+ITExtensions.h */,
+				935A24CB1EB9C77F004719CC /* NSBundle+ITExtensions.m */,
+			);
+			path = "NSBundle+ITExtensions";
+			sourceTree = "<group>";
+		};
+		935A24CD1EB9C7B0004719CC /* NSArray+ITExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				935A24CE1EB9C7B0004719CC /* NSArray+ITExtensions.h */,
+				935A24CF1EB9C7B0004719CC /* NSArray+ITExtensions.m */,
+			);
+			path = "NSArray+ITExtensions";
+			sourceTree = "<group>";
+		};
+		935A24D11EB9C81C004719CC /* UINib+ITExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				935A24D21EB9C81C004719CC /* UINib+ITExtensions.h */,
+				935A24D31EB9C81C004719CC /* UINib+ITExtensions.m */,
 			);
 			path = "UINib+ITExtensions";
+			sourceTree = "<group>";
+		};
+		935A24D51EB9CA15004719CC /* ITJSONRepresentation */ = {
+			isa = PBXGroup;
+			children = (
+				935A24D61EB9CA15004719CC /* ITJSONRepresentation+ITExtensions.h */,
+				935A24D71EB9CA15004719CC /* ITJSONRepresentation+ITExtensions.m */,
+			);
+			path = ITJSONRepresentation;
+			sourceTree = "<group>";
+		};
+		935A24D91EB9CB06004719CC /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				935A24DA1EB9CB36004719CC /* ITFBConstants.h */,
+				935A24DB1EB9CB36004719CC /* ITFBConstants.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		935A24DD1EB9CB71004719CC /* Macros */ = {
+			isa = PBXGroup;
+			children = (
+				935A24DE1EB9CB71004719CC /* ITBlockVariablesMacro.h */,
+				935A24DF1EB9CB71004719CC /* ITBlockVariablesMacro.m */,
+				935A24E01EB9CB71004719CC /* ITCompilerMacro.h */,
+				935A24E11EB9CB71004719CC /* ITCompilerMacro.m */,
+				935A24E21EB9CB71004719CC /* ITMacro.h */,
+				935A24E31EB9CB71004719CC /* ITMacro.m */,
+			);
+			path = Macros;
 			sourceTree = "<group>";
 		};
 		93B469441EB7C1830080C4F5 = {
@@ -235,6 +310,8 @@
 			children = (
 				934903DC1EB7CBA000589868 /* Categories */,
 				935A24B71EB9352D004719CC /* Classes */,
+				935A24DD1EB9CB71004719CC /* Macros */,
+				935A24D91EB9CB06004719CC /* Helpers */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -392,19 +469,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				935A24C81EB937A5004719CC /* UINib+ITExtensions.swift in Sources */,
+				935A24D81EB9CA15004719CC /* ITJSONRepresentation+ITExtensions.m in Sources */,
 				934903CE1EB7CA0500589868 /* ITSwiftStudyApp.xcdatamodeld in Sources */,
 				934903DA1EB7CAEB00589868 /* ITLoginViewController.swift in Sources */,
 				934903D31EB7CAA600589868 /* ITDBImage.swift in Sources */,
 				934903E11EB7D07C00589868 /* ITLoginView.swift in Sources */,
 				935A24BA1EB9352D004719CC /* ITTableViewCell.swift in Sources */,
 				935A24AC1EB91ED0004719CC /* ITUsersViewController.swift in Sources */,
+				935A24E41EB9CB71004719CC /* ITBlockVariablesMacro.m in Sources */,
+				935A24DC1EB9CB36004719CC /* ITFBConstants.m in Sources */,
 				935A24C51EB936BC004719CC /* UITableView+ITExtensions.swift in Sources */,
 				934903DF1EB7CBBD00589868 /* UIWindow+ITExtensions.swift in Sources */,
 				935A24AF1EB91EE9004719CC /* ITUsersView.swift in Sources */,
+				935A24D41EB9C81C004719CC /* UINib+ITExtensions.m in Sources */,
 				934903D51EB7CAA600589868 /* ITDBUser.swift in Sources */,
+				935A24E51EB9CB71004719CC /* ITCompilerMacro.m in Sources */,
+				935A24E61EB9CB71004719CC /* ITMacro.m in Sources */,
 				935A24C11EB93629004719CC /* ITFBUserCell.swift in Sources */,
 				93B469511EB7C1830080C4F5 /* AppDelegate.swift in Sources */,
+				935A24CC1EB9C77F004719CC /* NSBundle+ITExtensions.m in Sources */,
+				935A24D01EB9C7B0004719CC /* NSArray+ITExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
