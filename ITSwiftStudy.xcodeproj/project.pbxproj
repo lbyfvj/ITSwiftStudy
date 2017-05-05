@@ -29,6 +29,11 @@
 		935A24E41EB9CB71004719CC /* ITBlockVariablesMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24DF1EB9CB71004719CC /* ITBlockVariablesMacro.m */; };
 		935A24E51EB9CB71004719CC /* ITCompilerMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24E11EB9CB71004719CC /* ITCompilerMacro.m */; };
 		935A24E61EB9CB71004719CC /* ITMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24E31EB9CB71004719CC /* ITMacro.m */; };
+		935A24E91EBB1CD0004719CC /* ITImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24E81EBB1CD0004719CC /* ITImageModel.swift */; };
+		935A24F01EBB1EF2004719CC /* ITObjectCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24EF1EBB1EF2004719CC /* ITObjectCache.swift */; };
+		935A24F31EBB2438004719CC /* ITDispatch+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24F21EBB2438004719CC /* ITDispatch+ITExtensions.swift */; };
+		935A24FA1EBD02FA004719CC /* NSString+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24F91EBD02FA004719CC /* NSString+ITExtensions.swift */; };
+		935A24FC1EBD030C004719CC /* FileManager+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24FB1EBD030C004719CC /* FileManager+ITExtensions.swift */; };
 		93B469511EB7C1830080C4F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B469501EB7C1830080C4F5 /* AppDelegate.swift */; };
 		93B4696C1EB7C4310080C4F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93B469631EB7C4310080C4F5 /* Assets.xcassets */; };
 		93B4696D1EB7C4310080C4F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B469641EB7C4310080C4F5 /* LaunchScreen.storyboard */; };
@@ -66,6 +71,11 @@
 		935A24E11EB9CB71004719CC /* ITCompilerMacro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITCompilerMacro.m; sourceTree = "<group>"; };
 		935A24E21EB9CB71004719CC /* ITMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITMacro.h; sourceTree = "<group>"; };
 		935A24E31EB9CB71004719CC /* ITMacro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITMacro.m; sourceTree = "<group>"; };
+		935A24E81EBB1CD0004719CC /* ITImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITImageModel.swift; sourceTree = "<group>"; };
+		935A24EF1EBB1EF2004719CC /* ITObjectCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITObjectCache.swift; sourceTree = "<group>"; };
+		935A24F21EBB2438004719CC /* ITDispatch+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ITDispatch+ITExtensions.swift"; sourceTree = "<group>"; };
+		935A24F91EBD02FA004719CC /* NSString+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+ITExtensions.swift"; sourceTree = "<group>"; };
+		935A24FB1EBD030C004719CC /* FileManager+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+ITExtensions.swift"; sourceTree = "<group>"; };
 		93B4694D1EB7C1830080C4F5 /* ITSwiftStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ITSwiftStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93B469501EB7C1830080C4F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93B4695C1EB7C1830080C4F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -121,6 +131,9 @@
 		934903DC1EB7CBA000589868 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				935A24F81EBD02FA004719CC /* String+ITExtensions */,
+				935A24F71EBD02E5004719CC /* FileManager+ITExtensions */,
+				935A24F11EBB240E004719CC /* ITDispatch+ITExtensions */,
 				935A24D51EB9CA15004719CC /* ITJSONRepresentation */,
 				935A24D11EB9C81C004719CC /* UINib+ITExtensions */,
 				935A24CD1EB9C7B0004719CC /* NSArray+ITExtensions */,
@@ -177,6 +190,8 @@
 		935A24B71EB9352D004719CC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				935A24EE1EBB1ED8004719CC /* ITObjectCache */,
+				935A24E71EBB1C95004719CC /* ITImageModel */,
 				935A24B81EB9352D004719CC /* ITTableViewCell */,
 			);
 			path = Classes;
@@ -254,6 +269,46 @@
 				935A24E31EB9CB71004719CC /* ITMacro.m */,
 			);
 			path = Macros;
+			sourceTree = "<group>";
+		};
+		935A24E71EBB1C95004719CC /* ITImageModel */ = {
+			isa = PBXGroup;
+			children = (
+				935A24E81EBB1CD0004719CC /* ITImageModel.swift */,
+			);
+			path = ITImageModel;
+			sourceTree = "<group>";
+		};
+		935A24EE1EBB1ED8004719CC /* ITObjectCache */ = {
+			isa = PBXGroup;
+			children = (
+				935A24EF1EBB1EF2004719CC /* ITObjectCache.swift */,
+			);
+			path = ITObjectCache;
+			sourceTree = "<group>";
+		};
+		935A24F11EBB240E004719CC /* ITDispatch+ITExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				935A24F21EBB2438004719CC /* ITDispatch+ITExtensions.swift */,
+			);
+			path = "ITDispatch+ITExtensions";
+			sourceTree = "<group>";
+		};
+		935A24F71EBD02E5004719CC /* FileManager+ITExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				935A24FB1EBD030C004719CC /* FileManager+ITExtensions.swift */,
+			);
+			path = "FileManager+ITExtensions";
+			sourceTree = "<group>";
+		};
+		935A24F81EBD02FA004719CC /* String+ITExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				935A24F91EBD02FA004719CC /* NSString+ITExtensions.swift */,
+			);
+			path = "String+ITExtensions";
 			sourceTree = "<group>";
 		};
 		93B469441EB7C1830080C4F5 = {
@@ -470,6 +525,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				935A24D81EB9CA15004719CC /* ITJSONRepresentation+ITExtensions.m in Sources */,
+				935A24E91EBB1CD0004719CC /* ITImageModel.swift in Sources */,
 				934903CE1EB7CA0500589868 /* ITSwiftStudyApp.xcdatamodeld in Sources */,
 				934903DA1EB7CAEB00589868 /* ITLoginViewController.swift in Sources */,
 				934903D31EB7CAA600589868 /* ITDBImage.swift in Sources */,
@@ -478,11 +534,15 @@
 				935A24AC1EB91ED0004719CC /* ITUsersViewController.swift in Sources */,
 				935A24E41EB9CB71004719CC /* ITBlockVariablesMacro.m in Sources */,
 				935A24DC1EB9CB36004719CC /* ITFBConstants.m in Sources */,
+				935A24FA1EBD02FA004719CC /* NSString+ITExtensions.swift in Sources */,
+				935A24FC1EBD030C004719CC /* FileManager+ITExtensions.swift in Sources */,
 				935A24C51EB936BC004719CC /* UITableView+ITExtensions.swift in Sources */,
 				934903DF1EB7CBBD00589868 /* UIWindow+ITExtensions.swift in Sources */,
 				935A24AF1EB91EE9004719CC /* ITUsersView.swift in Sources */,
+				935A24F01EBB1EF2004719CC /* ITObjectCache.swift in Sources */,
 				935A24D41EB9C81C004719CC /* UINib+ITExtensions.m in Sources */,
 				934903D51EB7CAA600589868 /* ITDBUser.swift in Sources */,
+				935A24F31EBB2438004719CC /* ITDispatch+ITExtensions.swift in Sources */,
 				935A24E51EB9CB71004719CC /* ITCompilerMacro.m in Sources */,
 				935A24E61EB9CB71004719CC /* ITMacro.m in Sources */,
 				935A24C11EB93629004719CC /* ITFBUserCell.swift in Sources */,
