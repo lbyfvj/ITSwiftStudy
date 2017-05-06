@@ -9,5 +9,25 @@
 import UIKit
 
 class ITFBUserCell: ITTableViewCell {
+    
+    @IBOutlet var fullNameLabel: UILabel!
+    @IBOutlet var userImageView: ITImageView!
+
+    
+    // MARK: -
+    // MARK: Accessors
+    
+    var user: ITDBUser? {
+        didSet {
+            self.fill(withUser: user!)
+        }
+    }
+    
+    // MARK: -
+    // MARK: Public
+    func fill(withUser user: ITDBUser) {
+        self.fullNameLabel.text = user.firstName
+        //self.userImageView.imageModel = user.picture.imageModel
+    }
 
 }

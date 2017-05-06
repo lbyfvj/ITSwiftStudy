@@ -18,7 +18,6 @@ class ITImageModel: NSObject {
     // MARK: Class methods
     
     class func image(with url: URL) -> ITImageModel {
-        //let cls: AnyClass = (url.scheme == "file") ? ITFileImageModel.self : ITInternetImageModel.self
         
         let objectCache = ITObjectCache()
         let image = objectCache.object(for: url as AnyObject)

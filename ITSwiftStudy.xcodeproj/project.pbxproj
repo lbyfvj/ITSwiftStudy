@@ -34,6 +34,13 @@
 		935A24F31EBB2438004719CC /* ITDispatch+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24F21EBB2438004719CC /* ITDispatch+ITExtensions.swift */; };
 		935A24FA1EBD02FA004719CC /* NSString+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24F91EBD02FA004719CC /* NSString+ITExtensions.swift */; };
 		935A24FC1EBD030C004719CC /* FileManager+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24FB1EBD030C004719CC /* FileManager+ITExtensions.swift */; };
+		935A25001EBE17E8004719CC /* ITView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A24FF1EBE17E8004719CC /* ITView.swift */; };
+		935A25021EBE17FB004719CC /* ITImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A25011EBE17FB004719CC /* ITImageView.swift */; };
+		935A25051EBE182F004719CC /* ITLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A25041EBE182F004719CC /* ITLoadingView.swift */; };
+		935A25071EBE18D9004719CC /* ITLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 935A25061EBE18D9004719CC /* ITLoadingView.xib */; };
+		935A250A1EBE1A86004719CC /* Bundle+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A25091EBE1A86004719CC /* Bundle+ITExtensions.swift */; };
+		935A250D1EBE2037004719CC /* UIView+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A250C1EBE2037004719CC /* UIView+ITExtensions.swift */; };
+		935A25101EBE266D004719CC /* Array+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A250F1EBE266D004719CC /* Array+ITExtensions.swift */; };
 		93B469511EB7C1830080C4F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B469501EB7C1830080C4F5 /* AppDelegate.swift */; };
 		93B4696C1EB7C4310080C4F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93B469631EB7C4310080C4F5 /* Assets.xcassets */; };
 		93B4696D1EB7C4310080C4F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B469641EB7C4310080C4F5 /* LaunchScreen.storyboard */; };
@@ -76,6 +83,13 @@
 		935A24F21EBB2438004719CC /* ITDispatch+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ITDispatch+ITExtensions.swift"; sourceTree = "<group>"; };
 		935A24F91EBD02FA004719CC /* NSString+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+ITExtensions.swift"; sourceTree = "<group>"; };
 		935A24FB1EBD030C004719CC /* FileManager+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+ITExtensions.swift"; sourceTree = "<group>"; };
+		935A24FF1EBE17E8004719CC /* ITView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITView.swift; sourceTree = "<group>"; };
+		935A25011EBE17FB004719CC /* ITImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITImageView.swift; sourceTree = "<group>"; };
+		935A25041EBE182F004719CC /* ITLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITLoadingView.swift; sourceTree = "<group>"; };
+		935A25061EBE18D9004719CC /* ITLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ITLoadingView.xib; sourceTree = "<group>"; };
+		935A25091EBE1A86004719CC /* Bundle+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+ITExtensions.swift"; sourceTree = "<group>"; };
+		935A250C1EBE2037004719CC /* UIView+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+ITExtensions.swift"; sourceTree = "<group>"; };
+		935A250F1EBE266D004719CC /* Array+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+ITExtensions.swift"; sourceTree = "<group>"; };
 		93B4694D1EB7C1830080C4F5 /* ITSwiftStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ITSwiftStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93B469501EB7C1830080C4F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93B4695C1EB7C1830080C4F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -131,6 +145,7 @@
 		934903DC1EB7CBA000589868 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				935A250E1EBE265D004719CC /* Array+ITExtensions */,
 				935A24F81EBD02FA004719CC /* String+ITExtensions */,
 				935A24F71EBD02E5004719CC /* FileManager+ITExtensions */,
 				935A24F11EBB240E004719CC /* ITDispatch+ITExtensions */,
@@ -140,6 +155,8 @@
 				935A24C91EB9C77F004719CC /* NSBundle+ITExtensions */,
 				935A24C31EB9369E004719CC /* UITableView+ITExtensions */,
 				934903DD1EB7CBA000589868 /* UIWindow+ITExtensions */,
+				935A25081EBE1A77004719CC /* Bundle+ITExtensions */,
+				935A250B1EBE2028004719CC /* UIView+ITExtensions */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -166,6 +183,9 @@
 		935A24B01EB933EB004719CC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				935A25031EBE181B004719CC /* ITLoadingView */,
+				935A24FE1EBE17CB004719CC /* ITView */,
+				935A24FD1EBE17AD004719CC /* ITImageView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -309,6 +329,55 @@
 				935A24F91EBD02FA004719CC /* NSString+ITExtensions.swift */,
 			);
 			path = "String+ITExtensions";
+			sourceTree = "<group>";
+		};
+		935A24FD1EBE17AD004719CC /* ITImageView */ = {
+			isa = PBXGroup;
+			children = (
+				935A25011EBE17FB004719CC /* ITImageView.swift */,
+			);
+			path = ITImageView;
+			sourceTree = "<group>";
+		};
+		935A24FE1EBE17CB004719CC /* ITView */ = {
+			isa = PBXGroup;
+			children = (
+				935A24FF1EBE17E8004719CC /* ITView.swift */,
+			);
+			path = ITView;
+			sourceTree = "<group>";
+		};
+		935A25031EBE181B004719CC /* ITLoadingView */ = {
+			isa = PBXGroup;
+			children = (
+				935A25041EBE182F004719CC /* ITLoadingView.swift */,
+				935A25061EBE18D9004719CC /* ITLoadingView.xib */,
+			);
+			path = ITLoadingView;
+			sourceTree = "<group>";
+		};
+		935A25081EBE1A77004719CC /* Bundle+ITExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				935A25091EBE1A86004719CC /* Bundle+ITExtensions.swift */,
+			);
+			path = "Bundle+ITExtensions";
+			sourceTree = "<group>";
+		};
+		935A250B1EBE2028004719CC /* UIView+ITExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				935A250C1EBE2037004719CC /* UIView+ITExtensions.swift */,
+			);
+			path = "UIView+ITExtensions";
+			sourceTree = "<group>";
+		};
+		935A250E1EBE265D004719CC /* Array+ITExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				935A250F1EBE266D004719CC /* Array+ITExtensions.swift */,
+			);
+			path = "Array+ITExtensions";
 			sourceTree = "<group>";
 		};
 		93B469441EB7C1830080C4F5 = {
@@ -465,6 +534,7 @@
 				93B4696C1EB7C4310080C4F5 /* Assets.xcassets in Resources */,
 				935A24C21EB93629004719CC /* ITFBUserCell.xib in Resources */,
 				93B4696D1EB7C4310080C4F5 /* LaunchScreen.storyboard in Resources */,
+				935A25071EBE18D9004719CC /* ITLoadingView.xib in Resources */,
 				934903DB1EB7CAEB00589868 /* ITLoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -530,9 +600,13 @@
 				934903DA1EB7CAEB00589868 /* ITLoginViewController.swift in Sources */,
 				934903D31EB7CAA600589868 /* ITDBImage.swift in Sources */,
 				934903E11EB7D07C00589868 /* ITLoginView.swift in Sources */,
+				935A25021EBE17FB004719CC /* ITImageView.swift in Sources */,
 				935A24BA1EB9352D004719CC /* ITTableViewCell.swift in Sources */,
+				935A25051EBE182F004719CC /* ITLoadingView.swift in Sources */,
 				935A24AC1EB91ED0004719CC /* ITUsersViewController.swift in Sources */,
+				935A25101EBE266D004719CC /* Array+ITExtensions.swift in Sources */,
 				935A24E41EB9CB71004719CC /* ITBlockVariablesMacro.m in Sources */,
+				935A250D1EBE2037004719CC /* UIView+ITExtensions.swift in Sources */,
 				935A24DC1EB9CB36004719CC /* ITFBConstants.m in Sources */,
 				935A24FA1EBD02FA004719CC /* NSString+ITExtensions.swift in Sources */,
 				935A24FC1EBD030C004719CC /* FileManager+ITExtensions.swift in Sources */,
@@ -549,6 +623,8 @@
 				93B469511EB7C1830080C4F5 /* AppDelegate.swift in Sources */,
 				935A24CC1EB9C77F004719CC /* NSBundle+ITExtensions.m in Sources */,
 				935A24D01EB9C7B0004719CC /* NSArray+ITExtensions.m in Sources */,
+				935A250A1EBE1A86004719CC /* Bundle+ITExtensions.swift in Sources */,
+				935A25001EBE17E8004719CC /* ITView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
