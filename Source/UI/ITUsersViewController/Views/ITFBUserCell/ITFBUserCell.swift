@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ITFBUserCell: ITTableViewCell {
+class ITFBUserCell: ITTableViewCell, Reusable {
     
     @IBOutlet var fullNameLabel: UILabel!
     @IBOutlet var userImageView: ITImageView!

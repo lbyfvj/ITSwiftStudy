@@ -51,6 +51,27 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     // MARK: -
+    // MARK: Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.usersView?.tableView.registerReusableCell(ITFBUserCell.self)
+        
+        let navigationItem: UINavigationItem? = self.navigationItem
+        let logoutButton = UIBarButtonItem(title: kITLogoutButtonTitle, style: .plain, target: self, action: #selector(self.onLogOutButtonClicked))
+        navigationItem?.setLeftBarButton(logoutButton, animated: true)
+        
+        loadFriends()
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+    }
+    
+    // MARK: -
     // MARK: Private
     
     @IBAction func onLogOutButtonClicked(_ sender: Any) {
@@ -79,6 +100,8 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         user?.saveManagedObject()
+        
+        self.usersView?.tableView.reloadData()
     }
     
     func loadFriends() {
@@ -108,25 +131,6 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     // MARK: -
-    // MARK: Lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let navigationItem: UINavigationItem? = self.navigationItem
-        let logoutButton = UIBarButtonItem(title: kITLogoutButtonTitle, style: .plain, target: self, action: #selector(self.onLogOutButtonClicked))
-        navigationItem?.setLeftBarButton(logoutButton, animated: true)
-        
-        loadFriends()
-
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-    }
-    
-    // MARK: -
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -135,10 +139,12 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.reusableCell(with: ITFBUserCell.self)
-        //let user: ITDBUser? = friends[indexPath.row]
-        //cell.fill(withUserModel: user)
-        return cell as! ITFBUserCell
+        let cell: ITFBUserCell = tableView.dequeueReusableCell(indexPath: indexPath as NSIndexPath) as ITFBUserCell
+        let userFriends = (self.user!.friends.allObjects as! [ITDBUser]).sorted { $0.firstName! < $1.firstName! }
+        let user: ITDBUser? = userFriends[indexPath.row]
+        cell.fill(withUser: user!)
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
