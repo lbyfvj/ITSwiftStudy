@@ -8,41 +8,35 @@
 
 import UIKit
 
-protocol Reusable: class {
-    static var reuseIdentifier: String { get }
-    static var nib: UINib? { get }
+protocol ReusableView: class {
+    static var defaultReuseIdentifier: String { get }
 }
 
-extension Reusable {
-    static var reuseIdentifier: String { return String(describing: Self.self) }
-    static var nib: UINib? { return nil }
+extension ReusableView where Self: UIView {
+    static var defaultReuseIdentifier: String {
+        return NSStringFromClass(self)
+    }
 }
 
 extension UITableView {
     
-    func registerReusableCell<T: UITableViewCell>(_: T.Type) where T: Reusable, T: Reusable {
-        if let nib = T.nib {
-            self.register(nib, forCellReuseIdentifier: T.reuseIdentifier)
-        } else {
-            self.register(T.self, forCellReuseIdentifier: T.reuseIdentifier)
-        }
+    func register<T: UITableViewCell>(_: T.Type) where T: ReusableView {
+        register(T.self, forCellReuseIdentifier: T.defaultReuseIdentifier)
     }
     
-    func dequeueReusableCell<T: UITableViewCell>(indexPath: NSIndexPath) -> T where T: Reusable, T: Reusable {
-        return self.dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath as IndexPath) as! T
+    func register<T: UITableViewCell>(_: T.Type) where T: ReusableView, T: NibLoadableView {
+        let bundle = Bundle(for: T.self)
+        let nib = UINib(nibName: T.nibName, bundle: bundle)
+        
+        register(nib, forCellReuseIdentifier: T.defaultReuseIdentifier)
     }
     
-    func dequeueReusableCell(with cls: AnyClass) -> Any {
-        return dequeueReusableCell(withIdentifier: NSStringFromClass(cls))!
-    }
-    
-    func reusableCell(with cls: AnyClass) -> Any {
-        var cell: Any? = dequeueReusableCell(with: cls)
-        if cell == nil {
-            cell = UINib.object(with: cls)
+    func dequeueReusableCell<T: UITableViewCell>(forIndexPath indexPath: NSIndexPath) -> T where T: ReusableView {
+        guard let cell = dequeueReusableCell(withIdentifier: T.defaultReuseIdentifier, for: indexPath as IndexPath) as? T else {
+            fatalError("Could not dequeue cell with identifier: \(T.defaultReuseIdentifier)")
         }
         
-        return cell!
+        return cell
     }
     
 }

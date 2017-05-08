@@ -8,13 +8,17 @@
 
 import UIKit
 
-class ITTableViewCell: UITableViewCell {
-
+class ITTableViewCell: UITableViewCell, NibLoadableView, ReusableView {
+    
     // MARK: -
     // MARK: Accessors
     
-    func cellReuseIdentifier() -> String {
-        return NSStringFromClass(type(of: self))
+    func identifier() -> String {
+        return type(of: self).defaultReuseIdentifier
+    }
+    
+    func nib() -> String {
+        return type(of: self).nibName
     }
 
 }

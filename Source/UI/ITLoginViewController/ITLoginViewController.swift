@@ -70,7 +70,7 @@ class ITLoginViewController: UIViewController {
         
         MagicalRecord.save({ (_ localContext: NSManagedObjectContext) in
             self.user = ITDBUser.mr_createEntity(in: localContext)
-            self.user?.id = accessToken.userId
+            self.user?.id = accessToken.userId!
         }) { (_ success: Bool, _ error: Error?) in
             self.pushViewController(user: self.user!, animation: true)
         }

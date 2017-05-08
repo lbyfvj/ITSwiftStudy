@@ -10,8 +10,17 @@ import Foundation
 import CoreData
 
 @objc(ITDBImage)
-public class ITDBImage: NSManagedObject {
+class ITDBImage: ITDBObject {
     
-    @NSManaged var id: String?
+    var url: URL? {
+        get {
+            return URL(string: id)!
+        }
+    }
+    var imageModel: ITImageModel? {
+        get {
+            return ITImageModel.image(with: self.url!)
+        }
+    }
 
 }

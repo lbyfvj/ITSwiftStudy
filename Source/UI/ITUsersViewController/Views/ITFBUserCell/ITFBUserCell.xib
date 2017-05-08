@@ -25,15 +25,25 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b0g-wS-h4L">
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b0g-wS-h4L" customClass="ITImageView" customModule="ITSwiftStudy" customModuleProvider="target">
                         <rect key="frame" x="24" y="0.0" width="40" height="40"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Is9-BC-CqU">
+                                <rect key="frame" x="10" y="10" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="spinner" destination="Is9-BC-CqU" id="F9W-f9-hBl"/>
+                        </connections>
                     </view>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="fullNameLabel" destination="wEK-hS-ZCj" id="IjA-h3-dP8"/>
+                <outlet property="userImageView" destination="b0g-wS-h4L" id="XNk-Ta-ynH"/>
             </connections>
         </tableViewCell>
     </objects>

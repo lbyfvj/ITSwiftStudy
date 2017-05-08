@@ -15,13 +15,21 @@ import FacebookCore
 import MagicalRecord
 
 @objc(ITDBUser)
-public class ITDBUser: NSManagedObject {
-    
-    @NSManaged var id: String?
+class ITDBUser: ITDBObject {
+
     @NSManaged var firstName: String?
     @NSManaged var lastName: String?
     @NSManaged var friends: NSSet
+    @NSManaged var picture: ITDBImage
+    
     //@NSManaged var friendsArray: [ITDBUser]
+    
+    // MARK: -
+    // MARK: Accessors
+    
+    func fullName() -> String {
+        return "\(String(describing: self.firstName!)) \(String(describing: self.lastName!))"
+    }
 
     class func user() -> ITDBUser? {
         let accessToken = AccessToken.current
@@ -31,7 +39,7 @@ public class ITDBUser: NSManagedObject {
         }
         
         let user = ITDBUser.mr_createEntity(in: NSManagedObjectContext.mr_default())
-        user?.id = accessToken?.userId
+        user?.id = (accessToken?.userId)!
         
         return user
     }

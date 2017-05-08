@@ -39,7 +39,7 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func graphPath() -> String {
-        return "\(user!.id ?? "")/\(kITFriends)"
+        return "\(user!.id )/\(kITFriends)"
     }
     
     func requestParameters() -> [String: Any] {
@@ -56,14 +56,22 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.usersView?.tableView.registerReusableCell(ITFBUserCell.self)
+        self.usersView?.tableView.register(ITFBUserCell.self)
         
         let navigationItem: UINavigationItem? = self.navigationItem
         let logoutButton = UIBarButtonItem(title: kITLogoutButtonTitle, style: .plain, target: self, action: #selector(self.onLogOutButtonClicked))
         navigationItem?.setLeftBarButton(logoutButton, animated: true)
         
+        self.usersView?.model = self.user
+        
         loadFriends()
         
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.usersView?.model = self.user
     }
     
     override func didReceiveMemoryWarning() {
@@ -79,13 +87,13 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
         navigationController?.popToRootViewController(animated: true)
     }
     
-    func parse(object: [String : AnyObject]) -> ITDBUser {
+    func parse(object: [String : Any]) -> ITDBUser {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
         let user: ITDBUser? = ITDBUser.user(with: object[kITId]! as! String)
         user?.firstName = object[kITFirstName] as? String
         user?.lastName = object[kITLastName] as? String
-        //user?.picture = ITDBImage.managedObject(withID: object[kITPicture][kITData][kITURL])
+//        user?.picture = ITDBImage.managedObject(with: (object[kITPicture][kITData][kITURL] as? String)!) as! ITDBImage
         
         return user!
     }
@@ -117,8 +125,7 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
                         self.resultsHandler(dictianary)
                     }
                 }
-            case .failed(let error):
-                print("Graph Request Failed: \(error)")
+            case .failed( _):
                 self.failedLoadingData()
             }
         }
@@ -134,12 +141,11 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Friends count: \(String(describing: self.user?.friends.count))")
         return self.user!.friends.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ITFBUserCell = tableView.dequeueReusableCell(indexPath: indexPath as NSIndexPath) as ITFBUserCell
+        let cell: ITFBUserCell = tableView.dequeueReusableCell(forIndexPath: indexPath as NSIndexPath)
         let userFriends = (self.user!.friends.allObjects as! [ITDBUser]).sorted { $0.firstName! < $1.firstName! }
         let user: ITDBUser? = userFriends[indexPath.row]
         cell.fill(withUser: user!)
