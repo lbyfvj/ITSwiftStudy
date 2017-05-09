@@ -18,6 +18,24 @@ class ITLoginViewController: UIViewController {
     var user: ITDBUser?
     
     // MARK: -
+    // MARK: Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let user = ITDBUser.user()
+        
+        if user != nil {
+            self.pushViewController(user: user!, animation: false)
+        }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+    }
+    
+    // MARK: -
     // MARK: Private
     
     func pushViewController(user: ITDBUser, animation: Bool) {
@@ -74,24 +92,6 @@ class ITLoginViewController: UIViewController {
         }) { (_ success: Bool, _ error: Error?) in
             self.pushViewController(user: self.user!, animation: true)
         }
-    }
-    
-    // MARK: -
-    // MARK: Lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let user = ITDBUser.user()
-        
-        if user != nil {
-            self.pushViewController(user: user!, animation: false)
-        }        
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
     }
 
 }

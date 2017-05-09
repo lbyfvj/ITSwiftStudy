@@ -17,6 +17,7 @@ class ITDBImage: ITDBObject {
             return URL(string: id)!
         }
     }
+    
     var imageModel: ITImageModel? {
         get {
             return ITImageModel.image(with: self.url!)

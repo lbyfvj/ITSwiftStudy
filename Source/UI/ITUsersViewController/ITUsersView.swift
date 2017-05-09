@@ -11,15 +11,5 @@ import UIKit
 class ITUsersView: UIView {
     
     @IBOutlet var tableView: UITableView!
-
-    var model: Any? {
-        willSet {
-            
-        }
-        
-        didSet {
-            
-        }
-    }
     
 }

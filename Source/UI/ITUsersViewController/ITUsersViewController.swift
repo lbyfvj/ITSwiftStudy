@@ -29,26 +29,6 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: -
     // MARK: Accessors
     
-    func setGraphRequestConnection(_ graphRequestConnection: GraphRequestConnection) {
-        self.graphRequestConnection?.cancel()
-        self.graphRequestConnection = graphRequestConnection
-    }
-    
-    func accessToken() -> AccessToken? {
-        return AccessToken.current
-    }
-    
-    func graphPath() -> String {
-        return "\(user!.id )/\(kITFriends)"
-    }
-    
-    func requestParameters() -> [String: Any] {
-        return [kITFields: "\(kITId), \(kITFirstName), \(kITLastName), \(kITLargePicture)"]
-    }
-    
-    func graphRequest() -> GraphRequest {
-        return GraphRequest(graphPath: graphPath(), parameters: requestParameters())
-    }
     
     // MARK: -
     // MARK: Lifecycle
@@ -56,22 +36,22 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.usersView?.tableView.register(ITFBUserCell.self)
+        let usersView = self.usersView
+        
+        usersView?.tableView.register(ITFBUserCell.self)
         
         let navigationItem: UINavigationItem? = self.navigationItem
         let logoutButton = UIBarButtonItem(title: kITLogoutButtonTitle, style: .plain, target: self, action: #selector(self.onLogOutButtonClicked))
         navigationItem?.setLeftBarButton(logoutButton, animated: true)
         
-        self.usersView?.model = self.user
+        self.user?.loadFriends()
         
-        loadFriends()
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.objectDidLoadFriends(_:)), name: .objectDidLoadFriends, object: nil)
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.usersView?.model = self.user
     }
     
     override func didReceiveMemoryWarning() {
@@ -85,56 +65,6 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBAction func onLogOutButtonClicked(_ sender: Any) {
         LoginManager().logOut()
         navigationController?.popToRootViewController(animated: true)
-    }
-    
-    func parse(object: [String : Any]) -> ITDBUser {
-        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-        
-        let user: ITDBUser? = ITDBUser.user(with: object[kITId]! as! String)
-        user?.firstName = object[kITFirstName] as? String
-        user?.lastName = object[kITLastName] as? String
-//        user?.picture = ITDBImage.managedObject(with: (object[kITPicture][kITData][kITURL] as? String)!) as! ITDBImage
-        
-        return user!
-    }
-    
-    func resultsHandler(_ results: [[String : AnyObject]]) {
-        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-        
-        for object in results {
-            let friend: ITDBUser = self.parse(object: object )
-                //user?.friends.append(friend)
-            user?.friends = NSSet.init(object: friend)
-        }
-        
-        user?.saveManagedObject()
-        
-        self.usersView?.tableView.reloadData()
-    }
-    
-    func loadFriends() {
-        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-
-        graphRequestConnection = GraphRequestConnection()
-        graphRequestConnection?.add(graphRequest()) { httpResponse, result in
-            switch result {
-            case .success(let response):
-                if let responseDictionary = response.dictionaryValue {
-                    print(responseDictionary)
-                    if let dictianary = responseDictionary[kITData] as? [[String : AnyObject]] {
-                        self.resultsHandler(dictianary)
-                    }
-                }
-            case .failed( _):
-                self.failedLoadingData()
-            }
-        }
-            
-        graphRequestConnection?.start()
-    }
-    
-    func failedLoadingData() {
-        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
     }
     
     // MARK: -
@@ -157,6 +87,12 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
 //        let controller = ITFBFriendViewController()
 //        controller.user = friends[indexPath.row]
 //        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func objectDidLoadFriends(_ notification: NSNotification) {
+        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
+        
+         self.usersView?.tableView.reloadData()
     }
     
 }

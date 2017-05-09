@@ -9,6 +9,7 @@
 import UIKit
 
 import MagicalRecord
+import CoreData
 
 public class ITDBObject: NSManagedObject {
     
@@ -37,20 +38,5 @@ public class ITDBObject: NSManagedObject {
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
     }
-
-    // MARK: -
-    // MARK: Accessors
-    
-//    func setID(_ ID: String) {
-//        
-//    }
-//    
-//    func id() -> String {
-//        return customValue(forKey: kITId)
-//    }
-//    
-//    func removeID(_ ID: String) {
-//        
-//    }
 
 }
