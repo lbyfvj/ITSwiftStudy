@@ -71,12 +71,12 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.user!.friends.count
+        return self.user!.friends!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ITFBUserCell = tableView.dequeueReusableCell(forIndexPath: indexPath as NSIndexPath)
-        let userFriends = (self.user!.friends.allObjects as! [ITDBUser]).sorted { $0.firstName! < $1.firstName! }
+        let userFriends = (self.user!.friends?.allObjects as! [ITDBUser]).sorted { $0.firstName! < $1.firstName! }
         let user: ITDBUser? = userFriends[indexPath.row]
         cell.fill(withUser: user!)
         

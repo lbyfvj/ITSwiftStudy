@@ -20,10 +20,10 @@ class ITImageModel: NSObject {
     class func image(with url: URL) -> ITImageModel {
         
         let objectCache = ITObjectCache()
-        let image = objectCache.object(for: url as AnyObject)
+        var image = objectCache.object(for: url as AnyObject)
         
-        if !image.boolValue {
-            self.init(with: url);
+        if image.boolValue == nil {
+            image = self.init(with: url);
             objectCache.addObject(image, forKey: url as AnyObject)
         }
         

@@ -19,8 +19,8 @@ class ITDBUser: ITDBObject {
 
     @NSManaged var firstName: String?
     @NSManaged var lastName: String?
-    @NSManaged var friends: NSSet
-    @NSManaged var picture: ITDBImage
+    @NSManaged var friends: NSSet?
+    @NSManaged var image: ITDBImage?
     
     var graphRequestConnection: GraphRequestConnection?
     
@@ -98,9 +98,9 @@ class ITDBUser: ITDBObject {
         user?.firstName = object[kITFirstName] as? String
         user?.lastName = object[kITLastName] as? String
         
-//        let pictureJSON = object[kITPicture] as? [String: Any]
-//        let data = pictureJSON?[kITData] as? [String: Any]
-//        user?.picture = ITDBImage.managedObject(with: (data?[kITURL] as? String)!) as! ITDBImage
+        let pictureJSON = object[kITPicture] as? [String: Any]
+        let data = pictureJSON?[kITData] as? [String: Any]
+        user?.image = ITDBImage.managedObject(with: (data?[kITURL] as? String)!) as? ITDBImage
         
         return user!
     }

@@ -15,9 +15,10 @@ class ITFBUserCell: ITTableViewCell {
     
     // MARK: -
     // MARK: Public
+    
     func fill(withUser user: ITDBUser) {
         self.fullNameLabel.text = user.fullName()
-        //self.userImageView.imageModel = user.picture.imageModel
+        self.userImageView.imageModel = user.image?.imageModel
     }
 
 }
