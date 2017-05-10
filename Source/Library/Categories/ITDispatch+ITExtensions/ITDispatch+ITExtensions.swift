@@ -10,31 +10,34 @@ import Foundation
 
 public extension DispatchQueue {
     
-    private static var _onceTracker = [String]()
+    private static var _onceTracker = [String : Any]()
     
-    public class func once(file: String = #file, function: String = #function, line: Int = #line, block:(Void)->Void) {
-        let token = file + ":" + function + ":" + String(line)
-        once(token: token, block: block)
-    }
-    
-    public class func once(token: String, block:(Void)->Void) {
-        objc_sync_enter(self)
-        defer { objc_sync_exit(self) }
-        
-        
-        if _onceTracker.contains(token) {
-            return
-        }
-        
-        _onceTracker.append(token)
-        block()
-    }
-    
-    public class func onceReturn(file: String = #file, function: String = #function, line: Int = #line, block:(Void)->Void) -> Any
+    public class func once<Result>(
+        file: String = #file,
+        function: String = #function,
+        line: Int = #line,
+        block: (Void) -> Result
+    )
+        -> Result
     {
         let token = file + ":" + function + ":" + String(line)
         
-        return once(token: token, block: block)
+        return self.once(token: token, block: block)
+    }
+    
+    public class func once<Result>(
+        token: String,
+        block: (Void) -> Result
+    )
+        -> Result
+    {
+        objc_sync_enter(self)
+        defer { objc_sync_exit(self) }
+        
+        let result = self._onceTracker[token] as? Result ?? block()
+        self._onceTracker[token] = result
+        
+        return result
     }
 }
 

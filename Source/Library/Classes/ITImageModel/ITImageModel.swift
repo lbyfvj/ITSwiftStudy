@@ -42,7 +42,6 @@ class ITImageModel: NSObject {
         
         self.url = url
         try? FileManager.default.createDirectory(atPath: self.filePath, withIntermediateDirectories: true, attributes: nil)
-        
     }
     
     // MARK: -
@@ -65,10 +64,9 @@ class ITImageModel: NSObject {
     }
     
     var downloadSession: URLSession {
-        
-        let urlSession: URLSession = DispatchQueue.onceReturn {
+        let urlSession = DispatchQueue.once {
             URLSession(configuration: URLSessionConfiguration.ephemeral)
-            } as! URLSession
+        }
         
         return urlSession
     }
@@ -101,8 +99,7 @@ class ITImageModel: NSObject {
         self.image = image
     }
     
-    func performLoading() {
-        
+    func performLoading() {        
         if self.isCached {
             self.image = UIImage(contentsOfFile: self.filePath)
         } else {
@@ -111,13 +108,13 @@ class ITImageModel: NSObject {
         
         sleep(1)
         
-        
         performLoading(withCompletionBlock: {(_ image: UIImage) -> Void in
             self.finalizeLoading(with: image)
         })
     }
     
     func download() -> Void {
+        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         var image = UIImage(named: kITDefaultImageName)
         self.downloadTask = self.downloadSession.downloadTask(with: URLRequest(url:self.url!)) { (localUrl, response, error) in
             if let localUrl = localUrl, error == nil {

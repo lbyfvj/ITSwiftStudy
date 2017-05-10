@@ -16,9 +16,9 @@ class ITObjectCache: NSObject {
     // MARK: Class methods
     
     class func cache() -> ITObjectCache {
-        let object = DispatchQueue.onceReturn { self.init() }
+        let object = DispatchQueue.once { self.init() }
         
-        return object as! ITObjectCache
+        return object
     }
     
     // MARK: -
