@@ -11,7 +11,10 @@ import Foundation
 public extension UIView {
     
     public class func instantiateFromNibWithView<T: UIView>(viewType: T.Type) -> T? {
-        return Bundle.main.loadNibNamed(String(describing: viewType), owner: nil, options: nil)?.first as? T
+        return Bundle
+            .main
+            .loadNibNamed(String(describing: viewType), owner: nil, options: nil)?
+            .first as? T
     }
     
     public class func instantiateFromNib() -> Self? {

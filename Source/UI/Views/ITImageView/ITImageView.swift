@@ -13,10 +13,6 @@ class ITImageView: ITView {
     @IBOutlet var spinner: UIActivityIndicatorView!
     
     @IBOutlet var contentImageView: UIImageView! {
-        willSet {
-            
-        }
-        
         didSet {
             self.addSubview(contentImageView)
         }
@@ -28,6 +24,7 @@ class ITImageView: ITView {
         }
         
         didSet {
+            self.imageModel?.performLoading()
             self.spinner.stopAnimating()
         }
     }

@@ -11,7 +11,6 @@ import FacebookLogin
 
 let kITLoginButtonTitle = "Login with Facebook"
 
-
 class ITLoginView: UIView {
     
     @IBOutlet var loginButton: UIButton!

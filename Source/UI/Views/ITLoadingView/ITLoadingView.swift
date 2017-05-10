@@ -21,7 +21,7 @@ class ITLoadingView: UIView {
     // MARK: Class Methods
     
     class func view(onSuperView superView: UIView) -> ITLoadingView {
-        let view: ITLoadingView? = Bundle.object(withClass: type(of: self) as! AnyClass) as? ITLoadingView
+        let view: ITLoadingView? = Bundle.object(with: self)
         view?.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         view?.frame = superView.bounds
         view?.alpha = 0.0

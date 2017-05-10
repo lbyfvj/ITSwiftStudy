@@ -8,23 +8,29 @@
 
 import Foundation
 
-extension Bundle {
+public extension Bundle {
     
     // MARK: -
     // MARK: Public
     
-    class func object(withClass cls: AnyClass) -> Any {
-        return object(withClass: cls, withOwner: Optional.none!)
+    class func object<T>(with type: T.Type) -> T? {
+        return object(with: type, withOwner: nil)
     }
     
-    class func object(withClass cls: AnyClass, withOwner owner: Any) -> Any {
-        return object(withClass: cls, withOwner: owner, withOptions: Optional.none!)
+    class func object<T>(with type: T.Type, withOwner owner: Any?) -> T? {
+        return object(with: type, withOwner: owner, withOptions: nil)
     }
     
-    class func object(withClass cls: AnyClass, withOwner owner: Any, withOptions options: NSDictionary) -> Any {
-        let objects: [Any] = self.main.loadNibNamed(NSStringFromClass(cls), owner: owner, options: options as? [AnyHashable : Any])!
+    class func object<T>(
+        with type: T.Type,
+        withOwner owner: Any?,
+        withOptions options: [AnyHashable : Any]? = nil
+        ) -> T?
+    {
+        let name = String(describing: type)
+        let objects:[Any]? = self.main.loadNibNamed(name, owner: owner, options: options)
         
-        return objects.object(withClass: cls) as Any
+        return objects?.object(of: type)
     }
     
 }

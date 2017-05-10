@@ -13,14 +13,10 @@ public extension Array {
     // MARK: -
     // MARK: Public
     
-    public func object(withClass cls: AnyClass) -> Any? {
-        for object: Any in self {
-            if type(of: object) == cls {
-                return object
-            }
-        }
+    public func object<T>(of type: T.Type) -> T? {
         
-        return nil
+        return self.flatMap { $0 as? T }
+            .first
     }
     
 }

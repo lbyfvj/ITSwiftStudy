@@ -11,30 +11,25 @@ import Foundation
 extension FileManager {
     
     static var documentsDirectoryURL: URL {
-        return try! FileManager
-            .default
-            .url(for: .documentDirectory,
-                 in: .userDomainMask,
-                 appropriateFor: nil,
-                 create: true)
+        return self.url(for: .documentDirectory)
     }
     
     static var libraryDirectoryURL: URL {
-        return try! FileManager
-            .default
-            .url(for: .libraryDirectory,
-                 in: .userDomainMask,
-                 appropriateFor: nil,
-                 create: true)
+        return self.url(for: .libraryDirectory)
     }
     
     static var applicationDirectoryURL: URL {
-        return try! FileManager
-            .default
-            .url(for: .applicationSupportDirectory,
+        return self.url(for: .applicationSupportDirectory)
+    }
+    
+    static func url(for searchPath: FileManager.SearchPathDirectory) -> URL {
+        let result = try? FileManager.default
+            .url(for: searchPath,
                  in: .userDomainMask,
                  appropriateFor: nil,
                  create: true)
+        
+        return result ?? URL(fileURLWithPath: "")
     }
     
     func createDirectory(at url: URL) {
@@ -48,8 +43,12 @@ extension FileManager {
     
     func copyFile(at url: URL, to toURL: URL) {
         self.createDirectory(at: toURL.deletingLastPathComponent())
-
-        try? self.copyItem(at: url, to: toURL)
+        
+        do {
+            try self.copyItem(at: url, to: toURL)
+        } catch (let writeError) {
+            print("Error creating a file \(toURL) : \(writeError)")
+        }
     }
     
 }

@@ -99,7 +99,8 @@ class ITImageModel: NSObject {
         self.image = image
     }
     
-    func performLoading() {        
+    func performLoading() {
+        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         if self.isCached {
             self.image = UIImage(contentsOfFile: self.filePath)
         } else {
@@ -121,14 +122,8 @@ class ITImageModel: NSObject {
                 if let statusCode = (response as? HTTPURLResponse)?.statusCode {
                     print("Successfully downloaded. Status code: \(statusCode)")
                 }
-                
-                do {
-                    try FileManager.default.copyItem(at: localUrl, to: self.fileURL)
-                    image = UIImage(contentsOfFile: self.filePath)
-                } catch (let writeError) {
-                    print("Error creating a file \(self.fileURL) : \(writeError)")
-                }
-                
+                    FileManager.default.copyFile(at: localUrl, to: self.fileURL)
+                    image = UIImage(contentsOfFile: self.filePath)                
             } else {
                 print("Error while downloading a file")
             }
