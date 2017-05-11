@@ -10,30 +10,44 @@ import UIKit
 
 class ITImageView: ITView {
     
-    @IBOutlet var spinner: UIActivityIndicatorView!
+    @IBOutlet var spinner: UIActivityIndicatorView?
     
-    @IBOutlet var contentImageView: UIImageView! {
+    @IBOutlet var contentImageView: UIImageView? {
+        willSet {
+            self.contentImageView?.removeFromSuperview()
+        }
+        
         didSet {
-            self.addSubview(contentImageView)
+            self.addSubview(contentImageView!)
         }
     }
     
     var imageModel: ITImageModel? {
         willSet {
-            self.spinner.startAnimating()
+            self.contentImageView?.image = nil
+            
+            DispatchQueue.main.async {
+                self.spinner?.startAnimating()
+            }
         }
         
         didSet {
             self.imageModel?.performLoading()
-            self.contentImageView.image = self.imageModel?.image
-            self.spinner.stopAnimating()
+            
+            DispatchQueue.main.async {
+                self.contentImageView?.image = self.imageModel?.image
+                self.spinner?.stopAnimating()
+            }
         }
     }
     
     // MARK: -
     // MARK: Initializations and Deallocations
     
-
+    deinit {
+        self.contentImageView = nil
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -56,8 +70,4 @@ class ITImageView: ITView {
         imageView.autoresizingMask = [.flexibleLeftMargin, .flexibleWidth, .flexibleHeight]
         self.contentImageView = imageView
     }
-    
-    // MARK: -
-    // MARK: Accessors
-    
 }
