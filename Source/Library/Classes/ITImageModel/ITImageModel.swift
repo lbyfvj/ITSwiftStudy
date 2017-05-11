@@ -72,7 +72,7 @@ class ITImageModel: NSObject {
     }
     
     var isCached: Bool {
-        return self.fileURL.isFileURL && FileManager.default.fileExists(atPath: fileURL.path)
+        return self.fileURL.isFileURL && FileManager.default.fileExists(atPath: self.fileURL.path)
     }
     
     var fileURL: URL {
@@ -83,7 +83,7 @@ class ITImageModel: NSObject {
         }
         
         let fileName: String? = self.url?.relativePath.stringByAddingPercentEncodingWithalphanumericCharacterSet()
-        let path: String = URL(fileURLWithPath: filePath).appendingPathComponent(fileName!).absoluteString
+        let path: String = URL(fileURLWithPath: filePath).appendingPathComponent(fileName!).relativePath
         
         return URL(fileURLWithPath: path, isDirectory: false)
     }
@@ -91,44 +91,33 @@ class ITImageModel: NSObject {
     // MARK: -
     // MARK: Public
     
-    func performLoading(withCompletionBlock block: @escaping (_ image: UIImage) -> Void) {
-    
-    }
-    
     func finalizeLoading(with image: UIImage) {
+        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         self.image = image
     }
-    
+
     func performLoading() {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         if self.isCached {
-            self.image = UIImage(contentsOfFile: self.filePath)
+            self.image = UIImage(contentsOfFile: self.fileURL.path)
         } else {
             self.download()
         }
-        
-        sleep(1)
-        
-        performLoading(withCompletionBlock: {(_ image: UIImage) -> Void in
-            self.finalizeLoading(with: image)
-        })
     }
     
     func download() -> Void {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-        var image = UIImage(named: kITDefaultImageName)
         self.downloadTask = self.downloadSession.downloadTask(with: URLRequest(url:self.url!)) { (localUrl, response, error) in
             if let localUrl = localUrl, error == nil {
                 if let statusCode = (response as? HTTPURLResponse)?.statusCode {
                     print("Successfully downloaded. Status code: \(statusCode)")
                 }
-                    FileManager.default.copyFile(at: localUrl, to: self.fileURL)
-                    image = UIImage(contentsOfFile: self.filePath)                
+                FileManager.default.copyFile(at: localUrl, to: self.fileURL)
+                let image = UIImage(contentsOfFile: self.fileURL.path)
+                self.finalizeLoading(with: image ?? UIImage(named: self.kITDefaultImageName)!)
             } else {
                 print("Error while downloading a file")
             }
         }
-        
-        self.image = image
     }
 }

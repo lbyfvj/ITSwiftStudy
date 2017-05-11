@@ -25,6 +25,7 @@ class ITImageView: ITView {
         
         didSet {
             self.imageModel?.performLoading()
+            self.contentImageView.image = self.imageModel?.image
             self.spinner.stopAnimating()
         }
     }
