@@ -26,6 +26,11 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
         return nil
     }
     
+    var userFriends: [ITDBUser] {
+        return (self.user!.friends?.allObjects as! [ITDBUser]).sorted { $0.firstName! < $1.firstName! }
+    }
+    
+    
     // MARK: -
     // MARK: Accessors
     
@@ -46,7 +51,7 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
         
         self.user?.loadFriends()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.objectDidLoadFriends(_:)), name: .objectDidLoadFriends, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.objectDidLoadFriends(_:)), name: .objectDidLoadFriends, object: self.user)
     }
     
     override func awakeFromNib() {
@@ -71,28 +76,28 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.user!.friends!.count
+        
+        return self.userFriends.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ITFBUserCell = tableView.dequeueReusableCell(forIndexPath: indexPath as NSIndexPath)
-        let userFriends = (self.user!.friends?.allObjects as! [ITDBUser]).sorted { $0.firstName! < $1.firstName! }
-        let user: ITDBUser? = userFriends[indexPath.row]
-        cell.fill(withUser: user!)
+        let user: ITDBUser = self.userFriends[indexPath.row]
+        cell.fill(with: user)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let controller = ITFBFriendViewController()
-//        controller.user = friends[indexPath.row]
-//        navigationController?.pushViewController(controller, animated: true)
+        let controller = ITFriendDetailViewController()
+        controller.user = self.userFriends[indexPath.row]
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     func objectDidLoadFriends(_ notification: NSNotification) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
-         self.usersView?.tableView.reloadData()
+        self.usersView?.tableView.reloadData()
     }
     
 }

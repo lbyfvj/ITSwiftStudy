@@ -115,7 +115,7 @@ class ITDBUser: ITDBObject {
         
         self.saveManagedObject()
         
-        NotificationCenter.default.post(name: .objectDidLoadFriends, object: nil, userInfo: nil)
+        NotificationCenter.default.post(name: .objectDidLoadFriends, object: self, userInfo: nil)
     }
     
     func loadFriends() {
@@ -143,8 +143,37 @@ class ITDBUser: ITDBObject {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
     }
     
+    func login() {
+        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
+
+        LoginManager().logIn(readPermissions: [ .publicProfile, .userFriends ], viewController: nil) { loginResult in
+            switch loginResult {
+            case .failed(let error):
+                print("FACEBOOK LOGIN FAILED: \(error)")
+            case .cancelled:
+                print("User cancelled login.")
+            case .success( _, _, let accessToken):
+                print("Logged in!")
+                print("ACCESS TOKEN \(accessToken)")
+                self.completeLogin(accessToken: accessToken)
+            }
+        }
+    }
+    
+    func completeLogin(accessToken: AccessToken) {
+        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
+        
+        MagicalRecord.save({ (_ localContext: NSManagedObjectContext) in
+            let user = ITDBUser.mr_createEntity(in: localContext)
+            user?.id = accessToken.userId!
+        }) { (_ success: Bool, _ error: Error?) in
+            NotificationCenter.default.post(name: .objectDidLoadId, object: self, userInfo: nil)
+        }
+    }
+    
 }
 
 extension Notification.Name {
     static let objectDidLoadFriends = Notification.Name("objectDidLoadFriends")
+    static let objectDidLoadId = Notification.Name("objectDidLoadId")
 }

@@ -10,15 +10,15 @@ import UIKit
 
 class ITFBUserCell: ITTableViewCell {
     
-    @IBOutlet var fullNameLabel: UILabel!
-    @IBOutlet var userImageView: ITImageView!
+    @IBOutlet var fullNameLabel: UILabel?
+    @IBOutlet var userImageView: ITImageView?
     
     // MARK: -
     // MARK: Public
     
-    func fill(withUser user: ITDBUser) {
-        self.fullNameLabel.text = user.fullName()
-        self.userImageView.imageModel = user.image?.imageModel
+    func fill(with user: ITDBUser) {
+        self.fullNameLabel?.text = user.fullName()
+        self.userImageView?.imageModel = user.image?.imageModel
     }
 
 }

@@ -25,12 +25,8 @@ class ITLoadingView: UIView {
     private var _visible: Bool = true
     
     public var visible: Bool {
-        get {
-            return self._visible
-        }
-        set {
-            self.set(visible: newValue, animated: true, completionHandler: {})
-        }
+        get { return self._visible }
+        set { self.set(visible: newValue, animated: true, completionHandler: {}) }
     }
     
     
@@ -52,9 +48,7 @@ class ITLoadingView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        defer {
-            self.setup()
-        }
+        defer { self.setup() }
     }
     
     required init?(coder aDecoder: NSCoder) {

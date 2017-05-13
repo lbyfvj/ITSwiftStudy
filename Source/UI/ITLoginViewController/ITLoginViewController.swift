@@ -17,16 +17,22 @@ class ITLoginViewController: UIViewController {
     
     var user: ITDBUser?
     
+    var accessToken: AccessToken? {
+        return AccessToken.current
+    }
+    
     // MARK: -
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let user = ITDBUser.user()
+        self.user = ITDBUser.user()
         
-        if user != nil {
-            self.pushViewController(user: user!, animation: false)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.objectDidLoadId(_:)), name: .objectDidLoadId, object: self.user)
+        
+        if self.user != nil {
+            self.pushViewController(user: self.user!, animation: false)
         }
     }
     
@@ -42,56 +48,25 @@ class ITLoginViewController: UIViewController {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
         let controller = ITUsersViewController()
-        controller.user = user
+        controller.user = self.user
         navigationController?.pushViewController(controller, animated: animation)
     }
     
     @IBAction func onLoginButtonClicked(_ sender: Any) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
-        if (self.accessToken()?.userId != nil) {
-            completeLogin(accessToken: self.accessToken()!)
+        if (self.accessToken?.userId != nil) {
+            self.user?.completeLogin(accessToken: self.accessToken!)
         }
         else {
-            loginAtFacebook()
+            self.user?.login()
         }
     }
     
-    func accessToken() -> AccessToken? {
-        return AccessToken.current
-    }
-    
-    func loginAtFacebook() {
+    func objectDidLoadId(_ notification: NSNotification) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
-        let loginManager = LoginManager()
-        print("LOGIN MANAGER: \(loginManager)")
-        loginManager.logIn(readPermissions: [ .publicProfile, .userFriends ], viewController: self) { loginResult in
-            print("LOGIN RESULT! \(loginResult)")
-            switch loginResult {
-            case .failed(let error):
-                print("FACEBOOK LOGIN FAILED: \(error)")
-            case .cancelled:
-                print("User cancelled login.")
-            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                print("Logged in!")
-                print("GRANTED PERMISSIONS: \(grantedPermissions)")
-                print("DECLINED PERMISSIONS: \(declinedPermissions)")
-                print("ACCESS TOKEN \(accessToken)")
-                self.completeLogin(accessToken: accessToken)
-            }
-        }
-    }
-    
-    func completeLogin(accessToken: AccessToken) {
-        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-        
-        MagicalRecord.save({ (_ localContext: NSManagedObjectContext) in
-            self.user = ITDBUser.mr_createEntity(in: localContext)
-            self.user?.id = accessToken.userId!
-        }) { (_ success: Bool, _ error: Error?) in
-            self.pushViewController(user: self.user!, animation: true)
-        }
+        self.pushViewController(user: self.user!, animation: true)
     }
 
 }
