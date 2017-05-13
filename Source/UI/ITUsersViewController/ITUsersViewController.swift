@@ -81,7 +81,7 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let controller = ITFriendDetailViewController()
-        controller.user = self.userFriends[indexPath.row]
+        controller.friend = self.userFriends[indexPath.row]
         navigationController?.pushViewController(controller, animated: true)
     }
     

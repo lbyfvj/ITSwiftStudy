@@ -14,6 +14,39 @@ import FacebookCore
 
 import MagicalRecord
 
+struct ITFBProfileRequest: GraphRequestProtocol {
+    struct Response: GraphResponseProtocol {
+        let rawResponse: Any?
+        
+        public init(rawResponse: Any?) {
+            self.rawResponse = rawResponse
+        }
+        
+        public var dictionaryValue: [String : Any]? {
+            return rawResponse as? [String : Any]
+        }
+        
+        public var arrayValue: [Any]? {
+            return rawResponse as? [Any]
+        }
+        
+        public var stringValue: String? {
+            return rawResponse as? String
+        }
+    }
+    
+    var graphPath: String
+    var parameters: [String : Any]?
+    var accessToken = AccessToken.current
+    var httpMethod: GraphRequestHTTPMethod = .GET
+    var apiVersion: GraphAPIVersion = .defaultVersion
+    
+    init(with graphPath:String, requestParameters: [String : Any]) {
+        self.graphPath = graphPath
+        self.parameters = requestParameters
+    }
+}
+
 @objc(ITDBUser)
 class ITDBUser: ITDBObject {
 
@@ -21,8 +54,6 @@ class ITDBUser: ITDBObject {
     @NSManaged var lastName: String?
     @NSManaged var friends: NSSet?
     @NSManaged var image: ITDBImage?
-    
-    var graphRequestConnection: GraphRequestConnection?
     
     //@NSManaged var friendsArray: [ITDBUser]
     
@@ -57,11 +88,6 @@ class ITDBUser: ITDBObject {
         return "\(String(describing: self.firstName!)) \(String(describing: self.lastName!))"
     }
     
-    func setGraphRequestConnection(_ graphRequestConnection: GraphRequestConnection) {
-        self.graphRequestConnection?.cancel()
-        self.graphRequestConnection = graphRequestConnection
-    }
-    
     func accessToken() -> AccessToken? {
         return AccessToken.current
     }
@@ -80,16 +106,6 @@ class ITDBUser: ITDBObject {
     
     // MARK: -
     // MARK: Public
-    
-    func saveManagedObject() {
-        
-        MagicalRecord.save({ (localContext: NSManagedObjectContext!) in
-            
-        }, completion: {
-            (MRSaveCompletionHandler) in
-            
-        })
-    }
     
     func parse(object: [String : Any]) -> ITDBUser {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
@@ -120,23 +136,25 @@ class ITDBUser: ITDBObject {
     
     func loadFriends() {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
+ 
+        let profileRequest = ITFBProfileRequest(with: self.graphPath(), requestParameters: self.requestParameters())
+        let connection = GraphRequestConnection()
         
-        graphRequestConnection = GraphRequestConnection()
-        graphRequestConnection?.add(graphRequest()) { httpResponse, result in
+        connection.add(profileRequest) { response, result in
             switch result {
             case .success(let response):
+                print("Custom Graph Request Succeeded: \(response)")
                 if let responseDictionary = response.dictionaryValue {
-                    print(responseDictionary)
-                    if let dictianary = responseDictionary[kITData] as? [[String : AnyObject]] {
-                        self.resultsHandler(dictianary)
+                    if let dictionary = responseDictionary[kITData] as? [[String : AnyObject]] {
+                        self.resultsHandler(dictionary)
                     }
                 }
-            case .failed( _):
-                self.failedLoadingData()
+            case .failed(let error):
+                print("Custom Graph Request Failed: \(error)")
             }
         }
         
-        graphRequestConnection?.start()
+        connection.start()
     }
     
     func failedLoadingData() {
@@ -169,6 +187,31 @@ class ITDBUser: ITDBObject {
         }) { _ in
             NotificationCenter.default.post(name: .objectDidLoadId, object: self, userInfo: nil)
         }
+    }
+    
+    func loadFriendDetails(with id: String) {
+        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
+        
+        let profileRequest = ITFBProfileRequest(with: "/\(id)", requestParameters: self.requestParameters())
+        let connection = GraphRequestConnection()
+        
+        connection.add(profileRequest) { response, result in
+            switch result {
+            case .success(let response):
+                if let responseDictionary = response.dictionaryValue {
+                    self.firstName = responseDictionary[kITFirstName] as? String
+                    self.lastName = responseDictionary[kITLastName] as? String
+                    
+                    let pictureJSON = responseDictionary[kITPicture] as? [String: Any]
+                    let data = pictureJSON?[kITData] as? [String: Any]
+                    self.image = ITDBImage.managedObject(with: (data?[kITURL] as? String)!) as? ITDBImage                    
+                }
+            case .failed(let error):
+                print("Custom Graph Request Failed: \(error)")
+            }
+        }
+        
+        connection.start()
     }
     
 }

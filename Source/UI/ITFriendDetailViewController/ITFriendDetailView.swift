@@ -15,12 +15,12 @@ class ITFriendDetailView: ITView {
     
     @IBOutlet var userImageView: ITImageView?
     
-    var user: ITDBUser? {
+    var friend: ITDBUser? {
         willSet {
             self.loadingViewVisible = true
         }
         didSet {
-            self.fill(with: user!)
+            self.fill(with: friend!)
             self.loadingViewVisible = false
         }
     }
@@ -28,10 +28,11 @@ class ITFriendDetailView: ITView {
     // MARK: -
     // MARK: Private
     
-    func fill(with user: ITDBUser) {
+    func fill(with friend: ITDBUser) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-        self.firstNameLabel?.text = user.firstName
-        self.lastNameLabel?.text = user.lastName
+        self.firstNameLabel?.text = friend.firstName
+        self.lastNameLabel?.text = friend.lastName
+        self.userImageView?.imageModel = friend.image?.imageModel
         
     }
     

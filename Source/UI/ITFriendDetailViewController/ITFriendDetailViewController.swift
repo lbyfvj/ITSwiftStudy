@@ -18,10 +18,10 @@ class ITFriendDetailViewController: UIViewController {
         return nil
     }
         
-    var user: ITDBUser? {
+    var friend: ITDBUser? {
         didSet {
             if self.isViewLoaded {
-                self.friendDetailView?.user = user
+                self.friendDetailView?.friend = friend
             }
         }
     }
@@ -45,5 +45,8 @@ class ITFriendDetailViewController: UIViewController {
     func loadFriendDetails() {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
+        let friend = self.friend
+        friend?.loadFriendDetails(with: (self.friend?.id)!)
+        self.friendDetailView?.friend = friend
     }
 }
