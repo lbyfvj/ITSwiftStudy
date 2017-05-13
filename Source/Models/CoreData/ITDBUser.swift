@@ -107,15 +107,15 @@ class ITDBUser: ITDBObject {
     
     func resultsHandler(_ results: [[String : AnyObject]]) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-        
-        for object in results {
-            let friend: ITDBUser = self.parse(object: object )
-            self.friends = NSSet.init(object: friend)
+
+        MagicalRecord.save({ _ in
+            for object in results {
+                let friend: ITDBUser = self.parse(object: object )
+                self.friends = NSSet.init(object: friend)
+            }
+        }) { _ in
+            NotificationCenter.default.post(name: .objectDidLoadFriends, object: self, userInfo: nil)
         }
-        
-        self.saveManagedObject()
-        
-        NotificationCenter.default.post(name: .objectDidLoadFriends, object: self, userInfo: nil)
     }
     
     func loadFriends() {
@@ -163,10 +163,10 @@ class ITDBUser: ITDBObject {
     func completeLogin(accessToken: AccessToken) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
-        MagicalRecord.save({ (_ localContext: NSManagedObjectContext) in
-            let user = ITDBUser.mr_createEntity(in: localContext)
+        MagicalRecord.save({ _ in
+            let user = ITDBUser.mr_createEntity(in: NSManagedObjectContext.mr_default())
             user?.id = accessToken.userId!
-        }) { (_ success: Bool, _ error: Error?) in
+        }) { _ in
             NotificationCenter.default.post(name: .objectDidLoadId, object: self, userInfo: nil)
         }
     }

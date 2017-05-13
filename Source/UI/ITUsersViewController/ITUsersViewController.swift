@@ -16,8 +16,7 @@ let kITLogoutButtonTitle = "Logout"
 class ITUsersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var user: ITDBUser?
-    var graphRequestConnection: GraphRequestConnection?
-    
+ 
     var usersView: ITUsersView? {
         if isViewLoaded && (view is ITUsersView) {
             return (view as? ITUsersView)!
@@ -29,11 +28,6 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     var userFriends: [ITDBUser] {
         return (self.user!.friends?.allObjects as! [ITDBUser]).sorted { $0.firstName! < $1.firstName! }
     }
-    
-    
-    // MARK: -
-    // MARK: Accessors
-    
     
     // MARK: -
     // MARK: Lifecycle
@@ -56,12 +50,10 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
     }
     
     // MARK: -
@@ -76,7 +68,6 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return self.userFriends.count
     }
     
@@ -93,6 +84,9 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
         controller.user = self.userFriends[indexPath.row]
         navigationController?.pushViewController(controller, animated: true)
     }
+    
+    // MARK: -
+    // MARK: NSNotification
     
     func objectDidLoadFriends(_ notification: NSNotification) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")

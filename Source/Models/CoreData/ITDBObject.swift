@@ -19,14 +19,15 @@ public class ITDBObject: NSManagedObject {
     // MARK: Class Methods
     
     class func managedObject(with ID: String) -> ITDBObject {
+        let context = NSManagedObjectContext.mr_default()
         let predicate = NSPredicate(format: "self.id like %@", ID)
-        let objects: [ITDBObject] = self.mr_findAll(with: predicate)! as! [ITDBObject]
+        let objects: [ITDBObject] = self.mr_findAll(with: predicate, in: context) as! [ITDBObject]
 
         if objects.count > 0 {
             return objects.first!
         }
-        
-        let object: ITDBObject? = self.mr_createEntity()
+
+        let object: ITDBObject? = self.mr_createEntity(in: context)
         object?.id = ID
         
         return object!
