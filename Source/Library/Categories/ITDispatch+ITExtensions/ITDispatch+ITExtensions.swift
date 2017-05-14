@@ -28,16 +28,23 @@ public extension DispatchQueue {
     public class func once<Result>(
         token: String,
         block: (Void) -> Result
-    )
+        )
         -> Result
     {
-        objc_sync_enter(self)
-        defer { objc_sync_exit(self) }
-        
-        let result = self._onceTracker[token] as? Result ?? block()
-        self._onceTracker[token] = result
-        
-        return result
+        return synchronized(self) {
+            let result = self._onceTracker[token] as? Result ?? block()
+            self._onceTracker[token] = result
+            
+            return result
+        }
     }
+
+}
+
+func synchronized<Result>(_ token: AnyObject, execute: () -> Result) -> Result {
+    objc_sync_enter(token)
+    defer { objc_sync_exit(token) }
+    
+    return execute()
 }
 

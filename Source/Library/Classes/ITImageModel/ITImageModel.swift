@@ -8,17 +8,23 @@
 
 import UIKit
 
+extension Optional {
+    var boolValue: Bool {
+        return self != nil
+    }
+}
+
 class ITImageModel: NSObject {
     
-    let kITDefaultImageName = "defaultImage.png"
+    let downloadSession = URLSession(configuration: URLSessionConfiguration.ephemeral)
+    
     var image: UIImage?
-    var url: URL?
+    var url: URL
     
     // MARK: -
     // MARK: Class methods
     
-    class func image(with url: URL) -> ITImageModel {
-        
+    class func model(with url: URL) -> ITImageModel {
         let objectCache = ITObjectCache()
         var image = objectCache.object(for: url as AnyObject)
         
@@ -34,13 +40,14 @@ class ITImageModel: NSObject {
     // MARK: Initializations and Deallocations
     
     deinit {
-        self.downloadTask = nil
+        defer { downloadTask = nil }
     }
     
     required init(with url: URL) {
+        self.url = url
+        
         super.init()
         
-        self.url = url
         try? FileManager.default.createDirectory(atPath: self.filePath, withIntermediateDirectories: true, attributes: nil)
     }
     
@@ -48,42 +55,31 @@ class ITImageModel: NSObject {
     // MARK: Accessors
     
     var downloadTask: URLSessionDownloadTask? {
-        willSet {
-            self.downloadTask?.cancel()
-        }
-        didSet {
-            self.downloadTask?.resume()
-        }
+        willSet { downloadTask?.cancel() }
+        didSet { downloadTask?.resume() }
     }
     
     var filePath: String {
-        let cachePath: String? = FileManager.documentsDirectoryURL.path
-        let host: String? = url?.host?.stringByAddingPercentEncodingWithalphanumericCharacterSet()
+        let cachePath = FileManager.documentsDirectoryURL.path
+        let host = self.url.host?.alphanumeriPercentEncoded() ?? ""
         
-        return URL(fileURLWithPath: cachePath!).appendingPathComponent(host!).absoluteString
-    }
-    
-    var downloadSession: URLSession {
-        let urlSession = DispatchQueue.once {
-            URLSession(configuration: URLSessionConfiguration.ephemeral)
-        }
-        
-        return urlSession
+        return URL(fileURLWithPath: cachePath).appendingPathComponent(host).absoluteString
     }
     
     var isCached: Bool {
-        return self.fileURL.isFileURL && FileManager.default.fileExists(atPath: self.fileURL.path)
+        let url = self.fileURL
+        return url.isFileURL && FileManager.default.fileExists(atPath: url.path)
     }
     
     var fileURL: URL {
-        let url: URL? = self.url
+        let url = self.url
         
-        if (url?.isFileURL)! {
-            return url!
+        if url.isFileURL {
+            return url
         }
         
-        let fileName: String? = self.url?.relativePath.stringByAddingPercentEncodingWithalphanumericCharacterSet()
-        let path: String = URL(fileURLWithPath: filePath).appendingPathComponent(fileName!).relativePath
+        let fileName = self.url.relativePath.alphanumeriPercentEncoded()
+        let path: String = URL(fileURLWithPath: filePath).appendingPathComponent(fileName).relativePath
         
         return URL(fileURLWithPath: path, isDirectory: false)
     }
@@ -105,16 +101,17 @@ class ITImageModel: NSObject {
         }
     }
     
-    func download() -> Void {
+    func download() {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-        self.downloadTask = self.downloadSession.downloadTask(with: URLRequest(url:self.url!)) { (localUrl, response, error) in
+        let urlRequest = URLRequest(url:self.url)
+        self.downloadTask = self.downloadSession.downloadTask(with: urlRequest) { localUrl, response, error in
             if let localUrl = localUrl, error == nil {
                 if let statusCode = (response as? HTTPURLResponse)?.statusCode {
                     print("Successfully downloaded. Status code: \(statusCode)")
                 }
                 FileManager.default.copyFile(at: localUrl, to: self.fileURL)
                 let image = UIImage(contentsOfFile: self.fileURL.path)
-                self.finalizeLoading(with: image ?? UIImage(named: self.kITDefaultImageName)!)
+                self.finalizeLoading(with: image ?? UIImage(named: ITConstants.Default.kITDefaultImageName)!)
             } else {
                 print("Error while downloading a file")
             }

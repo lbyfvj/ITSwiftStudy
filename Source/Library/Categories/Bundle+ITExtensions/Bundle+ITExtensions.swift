@@ -28,7 +28,7 @@ public extension Bundle {
         ) -> T?
     {
         let name = String(describing: type)
-        let objects:[Any]? = self.main.loadNibNamed(name, owner: owner, options: options)
+        let objects = self.main.loadNibNamed(name, owner: owner, options: options) as? [T]
         
         return objects?.object(of: type)
     }

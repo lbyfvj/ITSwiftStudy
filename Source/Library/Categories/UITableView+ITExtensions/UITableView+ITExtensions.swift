@@ -9,31 +9,31 @@
 import UIKit
 
 protocol ReusableView: class {
-    static var defaultReuseIdentifier: String { get }
+    static var reuseIdentifier: String { get }
 }
 
 extension ReusableView where Self: UIView {
-    static var defaultReuseIdentifier: String {
-        return NSStringFromClass(self)
+    static var reuseIdentifier: String {
+        return String(describing: type(of: self))
     }
 }
 
 extension UITableView {
     
     func register<T: UITableViewCell>(_: T.Type) where T: ReusableView {
-        register(T.self, forCellReuseIdentifier: T.defaultReuseIdentifier)
+        self.register(T.self, forCellReuseIdentifier: T.reuseIdentifier)
     }
     
     func register<T: UITableViewCell>(_: T.Type) where T: ReusableView, T: NibLoadableView {
         let bundle = Bundle(for: T.self)
         let nib = UINib(nibName: T.nibName, bundle: bundle)
         
-        register(nib, forCellReuseIdentifier: T.defaultReuseIdentifier)
+        self.register(nib, forCellReuseIdentifier: T.reuseIdentifier)
     }
     
     func dequeueReusableCell<T: UITableViewCell>(forIndexPath indexPath: NSIndexPath) -> T where T: ReusableView {
-        guard let cell = dequeueReusableCell(withIdentifier: T.defaultReuseIdentifier, for: indexPath as IndexPath) as? T else {
-            fatalError("Could not dequeue cell with identifier: \(T.defaultReuseIdentifier)")
+        guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath as IndexPath) as? T else {
+            fatalError("Could not dequeue cell with identifier: \(T.reuseIdentifier)")
         }
         
         return cell

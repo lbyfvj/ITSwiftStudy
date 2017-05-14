@@ -13,7 +13,7 @@ import CoreData
 
 public class ITDBObject: NSManagedObject {
     
-    var id: String = ""
+    var id = ""
     
     // MARK: -
     // MARK: Class Methods
@@ -21,16 +21,14 @@ public class ITDBObject: NSManagedObject {
     class func managedObject(with ID: String) -> ITDBObject {
         let context = NSManagedObjectContext.mr_default()
         let predicate = NSPredicate(format: "self.id like %@", ID)
-        let objects: [ITDBObject] = self.mr_findAll(with: predicate, in: context) as! [ITDBObject]
-
-        if objects.count > 0 {
-            return objects.first!
-        }
-
-        let object: ITDBObject? = self.mr_createEntity(in: context)
-        object?.id = ID
+        let objects = self
+            .mr_findAll(with: predicate, in: context)
+            .flatMap { $0.flatMap { $0 as? ITDBObject } }
         
-        return object!
+        let result: ITDBObject = objects?.first ?? self.mr_createEntity(in: context) ?? ITDBObject()
+        result.id = ID
+        
+        return result
     }
     
     // MARK: -

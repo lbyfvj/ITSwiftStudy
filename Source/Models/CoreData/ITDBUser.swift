@@ -67,29 +67,22 @@ class ITDBUser: ITDBObject {
             return nil
         }
         
-        let user = ITDBUser.mr_createEntity(in: NSManagedObjectContext.mr_default())
-        user?.id = (accessToken?.userId)!
+        let user = ITDBUser.managedObject(with: (accessToken?.userId)!)
         
-        return user
+        return user as? ITDBUser
     }
     
     class func user(with id: String) -> ITDBUser? {
+        let user = ITDBUser.managedObject(with: id)
         
-        let user = ITDBUser.mr_createEntity(in: NSManagedObjectContext.mr_default())
-        user?.id = id
-        
-        return user
+        return user as? ITDBUser
     }
     
     // MARK: -
     // MARK: Accessors
     
     func fullName() -> String {
-        return "\(String(describing: self.firstName!)) \(String(describing: self.lastName!))"
-    }
-    
-    func accessToken() -> AccessToken? {
-        return AccessToken.current
+        return "\(String(describing: self.firstName ?? "")) \(String(describing: self.lastName ?? ""))"
     }
     
     func graphPath() -> String {

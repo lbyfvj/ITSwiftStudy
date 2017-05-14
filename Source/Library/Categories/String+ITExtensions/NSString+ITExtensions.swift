@@ -8,11 +8,11 @@
 
 import Foundation
 
-extension String {
+public extension String {
     
-    func stringByAddingPercentEncodingWithalphanumericCharacterSet() -> String {
+    public func alphanumeriPercentEncoded() -> String {
         let alphanumericCharacterSet = CharacterSet.alphanumerics
         
-        return addingPercentEncoding(withAllowedCharacters: alphanumericCharacterSet)!
+        return self.addingPercentEncoding(withAllowedCharacters: alphanumericCharacterSet)!
     }
 }

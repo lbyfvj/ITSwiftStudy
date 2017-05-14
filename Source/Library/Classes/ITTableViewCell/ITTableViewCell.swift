@@ -14,7 +14,7 @@ class ITTableViewCell: UITableViewCell, NibLoadableView, ReusableView {
     // MARK: Accessors
     
     func identifier() -> String {
-        return type(of: self).defaultReuseIdentifier
+        return type(of: self).reuseIdentifier
     }
     
     func nib() -> String {

@@ -31,40 +31,29 @@ class ITObjectCache: NSObject {
     // MARK: -
     // MARK: Public
     
-    func object(for key: AnyObject) -> AnyObject {
-        let object = DispatchQueue(label: "self").sync {
+    func object(for key: AnyObject) -> AnyObject {        
+        return synchronized(self) {
             self.objectCache.object(forKey: key as AnyObject)
-        }
-        
-        return object as AnyObject
+        } as AnyObject
     }
     
     func addObject(_ object: Any, forKey key: AnyObject) {
-        DispatchQueue(label: "self").sync {
+        synchronized(self) {
             self.objectCache.setObject(object as AnyObject, forKey: key as AnyObject)
         }
     }
     
     func removeValue(for key: String) {
-        DispatchQueue(label: "self").sync {
+        synchronized(self) {
             self.objectCache.setNilValueForKey(key)
         }
     }
     
     func containsObject(for key: AnyObject) -> Bool {
-        
-        if self.object(for: key).boolValue {
-            return true
-        }
-      
-        return false
+        return self.object(for: key).boolValue
     }
     
     func count() -> Int {
-        let count = DispatchQueue(label: "self").sync {
-            self.objectCache.count
-        }
-        
-        return count
+        return synchronized(self) { self.objectCache.count }
     }
 }

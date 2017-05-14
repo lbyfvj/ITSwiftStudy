@@ -9,6 +9,11 @@
 import Foundation
 
 struct ITConstants {
+    
+    struct Default {
+        static let kITDefaultImageName = "defaultImage.png"
+    }
+    
     struct FBConstants {
         static let kITMe = "me"
         static let kITFBPublicPermission = "public_profile"
