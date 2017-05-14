@@ -5,5 +5,4 @@
 #import <MagicalRecord/MagicalRecord.h>
 #import "UINib+ITExtensions.h"
 #import "ITJSONRepresentation+ITExtensions.h"
-#import "ITFBConstants.h"
 #import "ITMacro.h"

@@ -93,11 +93,11 @@ class ITDBUser: ITDBObject {
     }
     
     func graphPath() -> String {
-        return "\(String(describing: self.id ))/\(kITFriends)"
+        return "\(String(describing: self.id ))/\(ITConstants.FBConstants.kITFriends)"
     }
     
     func requestParameters() -> [String: Any] {
-        return [kITFields: "\(kITId), \(kITFirstName), \(kITLastName), \(kITLargePicture)"]
+        return [ITConstants.FBConstants.kITFields: "\(ITConstants.FBConstants.kITId), \(ITConstants.FBConstants.kITFirstName), \(ITConstants.FBConstants.kITLastName), \(ITConstants.FBConstants.kITLargePicture)"]
     }
     
     func graphRequest() -> GraphRequest {
@@ -110,13 +110,13 @@ class ITDBUser: ITDBObject {
     func parse(object: [String : Any]) -> ITDBUser {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
-        let user: ITDBUser? = ITDBUser.user(with: object[kITId]! as! String)
-        user?.firstName = object[kITFirstName] as? String
-        user?.lastName = object[kITLastName] as? String
+        let user: ITDBUser? = ITDBUser.user(with: object[ITConstants.FBConstants.kITId]! as! String)
+        user?.firstName = object[ITConstants.FBConstants.kITFirstName] as? String
+        user?.lastName = object[ITConstants.FBConstants.kITLastName] as? String
         
-        let pictureJSON = object[kITPicture] as? [String: Any]
-        let data = pictureJSON?[kITData] as? [String: Any]
-        user?.image = ITDBImage.managedObject(with: (data?[kITURL] as? String)!) as? ITDBImage
+        let pictureJSON = object[ITConstants.FBConstants.kITPicture] as? [String: Any]
+        let data = pictureJSON?[ITConstants.FBConstants.kITData] as? [String: Any]
+        user?.image = ITDBImage.managedObject(with: (data?[ITConstants.FBConstants.kITURL] as? String)!) as? ITDBImage
         
         return user!
     }
@@ -145,7 +145,7 @@ class ITDBUser: ITDBObject {
             case .success(let response):
                 print("Custom Graph Request Succeeded: \(response)")
                 if let responseDictionary = response.dictionaryValue {
-                    if let dictionary = responseDictionary[kITData] as? [[String : AnyObject]] {
+                    if let dictionary = responseDictionary[ITConstants.FBConstants.kITData] as? [[String : AnyObject]] {
                         self.resultsHandler(dictionary)
                     }
                 }
@@ -199,12 +199,16 @@ class ITDBUser: ITDBObject {
             switch result {
             case .success(let response):
                 if let responseDictionary = response.dictionaryValue {
-                    self.firstName = responseDictionary[kITFirstName] as? String
-                    self.lastName = responseDictionary[kITLastName] as? String
-                    
-                    let pictureJSON = responseDictionary[kITPicture] as? [String: Any]
-                    let data = pictureJSON?[kITData] as? [String: Any]
-                    self.image = ITDBImage.managedObject(with: (data?[kITURL] as? String)!) as? ITDBImage                    
+                    MagicalRecord.save({ _ in
+                        self.firstName = responseDictionary[ITConstants.FBConstants.kITFirstName] as? String
+                        self.lastName = responseDictionary[ITConstants.FBConstants.kITLastName] as? String
+                        
+                        let pictureJSON = responseDictionary[ITConstants.FBConstants.kITPicture] as? [String: Any]
+                        let data = pictureJSON?[ITConstants.FBConstants.kITData] as? [String: Any]
+                        self.image = ITDBImage.managedObject(with: (data?[ITConstants.FBConstants.kITURL] as? String)!) as? ITDBImage
+                    }) { _ in
+                        NotificationCenter.default.post(name: .objectDidUpdateDetails, object: self, userInfo: nil)
+                    }
                 }
             case .failed(let error):
                 print("Custom Graph Request Failed: \(error)")
@@ -219,4 +223,5 @@ class ITDBUser: ITDBObject {
 extension Notification.Name {
     static let objectDidLoadFriends = Notification.Name("objectDidLoadFriends")
     static let objectDidLoadId = Notification.Name("objectDidLoadId")
+    static let objectDidUpdateDetails = Notification.Name("objectDidUpdateDetails")
 }

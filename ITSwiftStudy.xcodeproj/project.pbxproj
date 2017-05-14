@@ -25,7 +25,6 @@
 		935A24D01EB9C7B0004719CC /* NSArray+ITExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24CF1EB9C7B0004719CC /* NSArray+ITExtensions.m */; };
 		935A24D41EB9C81C004719CC /* UINib+ITExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24D31EB9C81C004719CC /* UINib+ITExtensions.m */; };
 		935A24D81EB9CA15004719CC /* ITJSONRepresentation+ITExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24D71EB9CA15004719CC /* ITJSONRepresentation+ITExtensions.m */; };
-		935A24DC1EB9CB36004719CC /* ITFBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24DB1EB9CB36004719CC /* ITFBConstants.m */; };
 		935A24E41EB9CB71004719CC /* ITBlockVariablesMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24DF1EB9CB71004719CC /* ITBlockVariablesMacro.m */; };
 		935A24E51EB9CB71004719CC /* ITCompilerMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24E11EB9CB71004719CC /* ITCompilerMacro.m */; };
 		935A24E61EB9CB71004719CC /* ITMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A24E31EB9CB71004719CC /* ITMacro.m */; };
@@ -47,6 +46,7 @@
 		935A251E1EC6F39B004719CC /* ITFriendDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A251C1EC6F39B004719CC /* ITFriendDetailViewController.swift */; };
 		935A251F1EC6F39B004719CC /* ITFriendDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 935A251D1EC6F39B004719CC /* ITFriendDetailViewController.xib */; };
 		935A25211EC70E30004719CC /* ITFriendDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A25201EC70E30004719CC /* ITFriendDetailView.swift */; };
+		935A25231EC86DE1004719CC /* ITConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935A25221EC86DE1004719CC /* ITConstants.swift */; };
 		93B469511EB7C1830080C4F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B469501EB7C1830080C4F5 /* AppDelegate.swift */; };
 		93B4696C1EB7C4310080C4F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93B469631EB7C4310080C4F5 /* Assets.xcassets */; };
 		93B4696D1EB7C4310080C4F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B469641EB7C4310080C4F5 /* LaunchScreen.storyboard */; };
@@ -76,8 +76,6 @@
 		935A24D31EB9C81C004719CC /* UINib+ITExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINib+ITExtensions.m"; sourceTree = "<group>"; };
 		935A24D61EB9CA15004719CC /* ITJSONRepresentation+ITExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ITJSONRepresentation+ITExtensions.h"; sourceTree = "<group>"; };
 		935A24D71EB9CA15004719CC /* ITJSONRepresentation+ITExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ITJSONRepresentation+ITExtensions.m"; sourceTree = "<group>"; };
-		935A24DA1EB9CB36004719CC /* ITFBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITFBConstants.h; sourceTree = "<group>"; };
-		935A24DB1EB9CB36004719CC /* ITFBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITFBConstants.m; sourceTree = "<group>"; };
 		935A24DE1EB9CB71004719CC /* ITBlockVariablesMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITBlockVariablesMacro.h; sourceTree = "<group>"; };
 		935A24DF1EB9CB71004719CC /* ITBlockVariablesMacro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITBlockVariablesMacro.m; sourceTree = "<group>"; };
 		935A24E01EB9CB71004719CC /* ITCompilerMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITCompilerMacro.h; sourceTree = "<group>"; };
@@ -102,6 +100,7 @@
 		935A251C1EC6F39B004719CC /* ITFriendDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITFriendDetailViewController.swift; sourceTree = "<group>"; };
 		935A251D1EC6F39B004719CC /* ITFriendDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ITFriendDetailViewController.xib; sourceTree = "<group>"; };
 		935A25201EC70E30004719CC /* ITFriendDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITFriendDetailView.swift; sourceTree = "<group>"; };
+		935A25221EC86DE1004719CC /* ITConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITConstants.swift; sourceTree = "<group>"; };
 		93B4694D1EB7C1830080C4F5 /* ITSwiftStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ITSwiftStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93B469501EB7C1830080C4F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93B4695C1EB7C1830080C4F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -286,8 +285,7 @@
 		935A24D91EB9CB06004719CC /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				935A24DA1EB9CB36004719CC /* ITFBConstants.h */,
-				935A24DB1EB9CB36004719CC /* ITFBConstants.m */,
+				935A25221EC86DE1004719CC /* ITConstants.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -637,9 +635,9 @@
 				935A24E41EB9CB71004719CC /* ITBlockVariablesMacro.m in Sources */,
 				935A250D1EBE2037004719CC /* UIView+ITExtensions.swift in Sources */,
 				935A251E1EC6F39B004719CC /* ITFriendDetailViewController.swift in Sources */,
-				935A24DC1EB9CB36004719CC /* ITFBConstants.m in Sources */,
 				935A25161EC0F2E0004719CC /* UINib+ITExtensions.swift in Sources */,
 				935A24FA1EBD02FA004719CC /* NSString+ITExtensions.swift in Sources */,
+				935A25231EC86DE1004719CC /* ITConstants.swift in Sources */,
 				935A24FC1EBD030C004719CC /* FileManager+ITExtensions.swift in Sources */,
 				935A24C51EB936BC004719CC /* UITableView+ITExtensions.swift in Sources */,
 				934903DF1EB7CBBD00589868 /* UIWindow+ITExtensions.swift in Sources */,

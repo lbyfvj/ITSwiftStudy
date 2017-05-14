@@ -44,7 +44,7 @@ class ITLoginViewController: UIViewController {
     // MARK: -
     // MARK: Private
     
-    func pushViewController(user: ITDBUser, animation: Bool) {
+    private func pushViewController(user: ITDBUser, animation: Bool) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
         let controller = ITUsersViewController()
@@ -52,7 +52,7 @@ class ITLoginViewController: UIViewController {
         navigationController?.pushViewController(controller, animated: animation)
     }
     
-    @IBAction func onLoginButtonClicked(_ sender: Any) {
+    @IBAction private func onLoginButtonClicked(_ sender: Any) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
         if (self.accessToken?.userId != nil) {
@@ -63,7 +63,10 @@ class ITLoginViewController: UIViewController {
         }
     }
     
-    func objectDidLoadId(_ notification: NSNotification) {
+    // MARK: -
+    // MARK: NSNotification
+    
+    @objc private func objectDidLoadId(_ notification: NSNotification) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
         self.pushViewController(user: self.user!, animation: true)

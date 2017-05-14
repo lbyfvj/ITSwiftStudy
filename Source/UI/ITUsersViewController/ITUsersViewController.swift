@@ -88,7 +88,7 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: -
     // MARK: NSNotification
     
-    func objectDidLoadFriends(_ notification: NSNotification) {
+    @objc private func objectDidLoadFriends(_ notification: NSNotification) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
         self.usersView?.tableView.reloadData()
