@@ -13,6 +13,7 @@ import FacebookLogin
 import FacebookCore
 
 import MagicalRecord
+import IDPCastable
 
 struct ITFBProfileRequest: GraphRequestProtocol {
     struct Response: GraphResponseProtocol {
@@ -52,7 +53,7 @@ class ITDBUser: ITDBObject {
 
     @NSManaged var firstName: String?
     @NSManaged var lastName: String?
-    @NSManaged var friends: NSSet?
+    @NSManaged var friends: Set<ITDBUser>?
     @NSManaged var image: ITDBImage?
     
     //@NSManaged var friendsArray: [ITDBUser]
@@ -100,28 +101,31 @@ class ITDBUser: ITDBObject {
     // MARK: -
     // MARK: Public
     
-    func parse(object: [String : Any]) -> ITDBUser {
+    func parse(object: [String : AnyObject]) -> ITDBUser? {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
-        let user: ITDBUser? = ITDBUser.user(with: object[ITConstants.FBConstants.kITId]! as! String)
-        user?.firstName = object[ITConstants.FBConstants.kITFirstName] as? String
-        user?.lastName = object[ITConstants.FBConstants.kITLastName] as? String
+        let user = cast(object[ITConstants.FBConstants.kITId]).flatMap { ITDBUser.user(with: $0) }
+        user?.firstName = cast(object[ITConstants.FBConstants.kITFirstName])
+        user?.lastName = cast(object[ITConstants.FBConstants.kITLastName])
         
         let pictureJSON = object[ITConstants.FBConstants.kITPicture] as? [String: Any]
         let data = pictureJSON?[ITConstants.FBConstants.kITData] as? [String: Any]
-        user?.image = ITDBImage.managedObject(with: (data?[ITConstants.FBConstants.kITURL] as? String)!) as? ITDBImage
+        user?.image = ITDBImage.managedObject(with: (cast(data?[ITConstants.FBConstants.kITURL]))!) as? ITDBImage
         
-        return user!
+        return user
     }
     
     func resultsHandler(_ results: [[String : AnyObject]]) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
 
         MagicalRecord.save({ _ in
-            for object in results {
-                let friend: ITDBUser = self.parse(object: object )
-                self.friends = NSSet.init(object: friend)
-            }
+            
+            let friends = results.flatMap(self.parse)
+            self.friends = Set<ITDBUser>(friends)
+//            for object in results {
+//                let friend: ITDBUser = self.parse(object: object )
+//                self.friends = NSSet.init(object: friend)
+//            }
         }) { _ in
             NotificationCenter.default.post(name: .objectDidLoadFriends, object: self, userInfo: nil)
         }
@@ -136,12 +140,9 @@ class ITDBUser: ITDBObject {
         connection.add(profileRequest) { response, result in
             switch result {
             case .success(let response):
-                print("Custom Graph Request Succeeded: \(response)")
-                if let responseDictionary = response.dictionaryValue {
-                    if let dictionary = responseDictionary[ITConstants.FBConstants.kITData] as? [[String : AnyObject]] {
-                        self.resultsHandler(dictionary)
-                    }
-                }
+                response.dictionaryValue
+                    .flatMap { cast($0[ITConstants.FBConstants.kITData]) }
+                    .flatMap { self.resultsHandler($0) }
             case .failed(let error):
                 print("Custom Graph Request Failed: \(error)")
             }

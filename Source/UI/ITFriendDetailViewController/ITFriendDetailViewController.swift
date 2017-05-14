@@ -8,11 +8,14 @@
 
 import UIKit
 
+import IDPCastable
+
 class ITFriendDetailViewController: UIViewController {
     
+    // TEMP. with return cast(self.isViewLoaded) works incorrect. The view doesn't load.
     var friendDetailView: ITFriendDetailView? {
-        if isViewLoaded && (view is ITFriendDetailView) {
-            return (view as? ITFriendDetailView)!
+        if self.isViewLoaded && (view is ITFriendDetailView) {
+            return self.view as? ITFriendDetailView
         }
         
         return nil
@@ -47,7 +50,7 @@ class ITFriendDetailViewController: UIViewController {
     private func loadFriendDetails() {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
-        self.friend?.loadFriendDetails(with: (self.friend?.id)!)
+        self.friend?.loadFriendDetails(with: self.friend?.id ?? "")
     }
     
     // MARK: -

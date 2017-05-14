@@ -12,12 +12,12 @@ import CoreData
 @objc(ITDBImage)
 class ITDBImage: ITDBObject {
     
-    var url: URL {
-        return URL(string: self.id) ?? URL(fileURLWithPath: "")
+    var url: URL? {
+        return URL(string: self.id)
     }
     
     var imageModel: ITImageModel? {
-        return ITImageModel.model(with: self.url)
+        return self.url.map(ITImageModel.model)
     }
 
 }

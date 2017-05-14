@@ -16,9 +16,7 @@ class ITFriendDetailView: ITView {
     @IBOutlet var userImageView: ITImageView?
     
     var friend: ITDBUser? {
-        willSet {
-            self.loadingViewVisible = true
-        }
+        willSet { self.loadingViewVisible = true }
         didSet {
             self.fill(with: friend!)
             self.loadingViewVisible = false

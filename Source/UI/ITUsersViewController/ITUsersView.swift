@@ -10,6 +10,6 @@ import UIKit
 
 class ITUsersView: UIView {
     
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet var tableView: UITableView?
     
 }

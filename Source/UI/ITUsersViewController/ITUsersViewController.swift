@@ -10,6 +10,7 @@ import UIKit
 
 import FacebookLogin
 import FacebookCore
+import IDPCastable
 
 let kITLogoutButtonTitle = "Logout"
 
@@ -18,15 +19,14 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     var user: ITDBUser?
  
     var usersView: ITUsersView? {
-        if isViewLoaded && (view is ITUsersView) {
-            return (view as? ITUsersView)!
-        }
-        
-        return nil
+        return cast(self.viewIfLoaded)
     }
     
     var userFriends: [ITDBUser] {
-        return (self.user!.friends?.allObjects as! [ITDBUser]).sorted { $0.firstName! < $1.firstName! }
+        return (self.user?.friends
+            .flatMap { $0 }!
+            .sorted { $0.firstName! < $1.firstName! })!
+        // TEMP. should be changed...
     }
     
     // MARK: -
@@ -37,11 +37,11 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let usersView = self.usersView
         
-        usersView?.tableView.register(ITFBUserCell.self)
+        usersView?.tableView?.register(ITFBUserCell.self)
         
-        let navigationItem: UINavigationItem? = self.navigationItem
+        let navigationItem = self.navigationItem
         let logoutButton = UIBarButtonItem(title: kITLogoutButtonTitle, style: .plain, target: self, action: #selector(self.onLogOutButtonClicked))
-        navigationItem?.setLeftBarButton(logoutButton, animated: true)
+        navigationItem.setLeftBarButton(logoutButton, animated: true)
         
         self.user?.loadFriends()
         
@@ -91,7 +91,7 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     @objc private func objectDidLoadFriends(_ notification: NSNotification) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
-        self.usersView?.tableView.reloadData()
+        self.usersView?.tableView?.reloadData()
     }
     
 }
