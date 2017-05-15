@@ -8,7 +8,14 @@
 
 import UIKit
 
-class ITObjectCache: NSObject {
+class ITObjectCache/*<Key: Hashable, Value>*/: NSObject {
+    
+//    typealias Index = Int
+//    typealias Element = (key: Key, value: Value)
+//    
+//    var keys = [Key]()
+//    var objCache = [Key: Value]()
+//    var values: [Value] { return keys.flatMap { self.objCache[$0] } }
     
     var objectCache: NSMapTable<AnyObject, AnyObject>
     
@@ -28,8 +35,29 @@ class ITObjectCache: NSObject {
         self.objectCache = NSMapTable.strongToWeakObjects()
     }
     
+//    init(_ objectCache: ITObjectCache<Key, Value>) {
+//        self.keys = objectCache.keys
+//        self.objCache = objectCache.objCache
+//    }
+    
     // MARK: -
     // MARK: Public
+    
+//    func object<T>(for key: Key) -> T? {
+//        let obj = objCache[key]
+//        
+//        if let obj = obj as? T {
+//            return obj
+//        }
+//        
+//        return nil
+//    }
+//    
+//    func addObject(_ object: Element, forKey key: Key) {
+//        synchronized(self) {
+//            
+//        }
+//    }
     
     func object(for key: AnyObject) -> AnyObject {        
         return synchronized(self) {
@@ -57,3 +85,25 @@ class ITObjectCache: NSObject {
         return synchronized(self) { self.objectCache.count }
     }
 }
+
+//extension ITObjectCache: Collection {
+//    
+//    var startIndex: Index { return 0 }
+//    var endIndex: Index { return self.keys.endIndex }
+//    
+//    func index(after i: Int) -> Int {
+//        return i + 1
+//    }
+//    
+//    subscript(key: Key) -> Value? {
+//        get { return objCache[key] }
+//        set(newValue) {
+//            if let value = newValue {
+//                if objCache[key] == nil {
+//                    keys.append(key)
+//                }
+//                objCache[key] = value
+//            }
+//        }
+//    }
+//}

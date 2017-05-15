@@ -22,11 +22,10 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
         return cast(self.viewIfLoaded)
     }
     
-    var userFriends: [ITDBUser] {
+    var userFriends: [ITDBUser]? {
         return (self.user?.friends
-            .flatMap { $0 }!
-            .sorted { $0.firstName! < $1.firstName! })!
-        // TEMP. should be changed...
+            .flatMap{ $0.flatMap { $0 } })?
+            .sorted{ $0.firstName! < $1.firstName! }
     }
     
     // MARK: -
@@ -68,20 +67,24 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.userFriends.count
+        return self.userFriends?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ITFBUserCell = tableView.dequeueReusableCell(forIndexPath: indexPath as NSIndexPath)
-        let user: ITDBUser = self.userFriends[indexPath.row]
-        cell.fill(with: user)
+        if let user = self.userFriends?[indexPath.row] {
+            cell.fill(with: user)
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let controller = ITFriendDetailViewController()
-        controller.friend = self.userFriends[indexPath.row]
+        if let friend = self.userFriends?[indexPath.row] {
+            controller.friend = friend
+        }
+        
         navigationController?.pushViewController(controller, animated: true)
     }
     

@@ -110,7 +110,8 @@ class ITDBUser: ITDBObject {
         
         let pictureJSON = object[ITConstants.FBConstants.kITPicture] as? [String: Any]
         let data = pictureJSON?[ITConstants.FBConstants.kITData] as? [String: Any]
-        user?.image = ITDBImage.managedObject(with: (cast(data?[ITConstants.FBConstants.kITURL]))!) as? ITDBImage
+        let imageId = data.flatMap { _ in String(describing: [ITConstants.FBConstants.kITURL]) }
+        user?.image = ITDBImage.managedObject(with:imageId ?? "") as? ITDBImage
         
         return user
     }
@@ -119,13 +120,8 @@ class ITDBUser: ITDBObject {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
 
         MagicalRecord.save({ _ in
-            
             let friends = results.flatMap(self.parse)
             self.friends = Set<ITDBUser>(friends)
-//            for object in results {
-//                let friend: ITDBUser = self.parse(object: object )
-//                self.friends = NSSet.init(object: friend)
-//            }
         }) { _ in
             NotificationCenter.default.post(name: .objectDidLoadFriends, object: self, userInfo: nil)
         }
@@ -177,7 +173,9 @@ class ITDBUser: ITDBObject {
         
         MagicalRecord.save({ _ in
             let user = ITDBUser.mr_createEntity(in: NSManagedObjectContext.mr_default())
-            user?.id = accessToken.userId!
+            if let userId = accessToken.userId {
+                user?.id = userId
+            }
         }) { _ in
             NotificationCenter.default.post(name: .objectDidLoadId, object: self, userInfo: nil)
         }
@@ -194,12 +192,13 @@ class ITDBUser: ITDBObject {
             case .success(let response):
                 if let responseDictionary = response.dictionaryValue {
                     MagicalRecord.save({ _ in
-                        self.firstName = responseDictionary[ITConstants.FBConstants.kITFirstName] as? String
-                        self.lastName = responseDictionary[ITConstants.FBConstants.kITLastName] as? String
+                        self.firstName = cast(responseDictionary[ITConstants.FBConstants.kITFirstName])
+                        self.lastName = cast(responseDictionary[ITConstants.FBConstants.kITLastName])
                         
                         let pictureJSON = responseDictionary[ITConstants.FBConstants.kITPicture] as? [String: Any]
                         let data = pictureJSON?[ITConstants.FBConstants.kITData] as? [String: Any]
-                        self.image = ITDBImage.managedObject(with: (data?[ITConstants.FBConstants.kITURL] as? String)!) as? ITDBImage
+                        let imageId = data.flatMap { _ in String(describing: [ITConstants.FBConstants.kITURL]) }
+                        self.image = ITDBImage.managedObject(with:imageId ?? "") as? ITDBImage
                     }) { _ in
                         NotificationCenter.default.post(name: .objectDidUpdateDetails, object: self, userInfo: nil)
                     }
