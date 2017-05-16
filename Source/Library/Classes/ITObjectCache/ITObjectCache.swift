@@ -107,3 +107,15 @@ class ITObjectCache/*<Key: Hashable, Value>*/: NSObject {
 //        }
 //    }
 //}
+
+//extension ITObjectCache: Sequence {
+//    typealias Iterator = AnyIterator<Key, Value>
+//    
+//    func makeIterator() -> Iterator {
+//        var iterator = objCache.makeIterator()
+//
+//        return AnyIterator {
+//            return iterator.next()
+//        }
+//    }
+//}
