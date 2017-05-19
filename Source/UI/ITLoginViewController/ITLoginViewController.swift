@@ -28,9 +28,7 @@ class ITLoginViewController: UIViewController {
         super.viewDidLoad()
         
         self.user = ITDBUser.user()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.objectDidLoadId(_:)), name: .objectDidLoadId, object: self.user)
-        
+
         if self.user != nil {
             self.pushViewController(user: self.user!, animation: false)
         }
@@ -54,22 +52,9 @@ class ITLoginViewController: UIViewController {
     
     @IBAction private func onLoginButtonClicked(_ sender: Any) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-        
-        if (self.accessToken?.userId != nil) {
-            self.user?.completeLogin(accessToken: self.accessToken!)
-        }
-        else {
-            self.user?.login()
-        }
-    }
-    
-    // MARK: -
-    // MARK: NSNotification
-    
-    @objc private func objectDidLoadId(_ notification: NSNotification) {
-        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-        
-        self.pushViewController(user: self.user!, animation: true)
-    }
 
+        self.user?.login() { (user:ITDBUser) in
+            self.pushViewController(user: user, animation: true)
+        }
+    }
 }

@@ -24,16 +24,25 @@ class ITImageModel: NSObject {
     // MARK: -
     // MARK: Class methods
     
+//    class func model(with url: URL) -> ITImageModel {
+//        let objectCache = ITObjectCache()
+//        var image = objectCache.object(for: url as AnyObject)
+//        
+//        if image.boolValue == nil {
+//            image = self.init(with: url);
+//            objectCache.addObject(image, forKey: url as AnyObject)
+//        }
+//        
+//        return image as! ITImageModel
+//    }
+    
     class func model(with url: URL) -> ITImageModel {
-        let objectCache = ITObjectCache()
-        var image = objectCache.object(for: url as AnyObject)
+        var objectCache = ObjectCache<URL, ITImageModel>()
+        let image = objectCache.object(for: url) ?? self.init(with: url)
         
-        if image.boolValue == nil {
-            image = self.init(with: url);
-            objectCache.addObject(image, forKey: url as AnyObject)
-        }
+        objectCache[url] = image
         
-        return image as! ITImageModel
+        return image
     }
     
     // MARK: -

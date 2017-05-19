@@ -151,7 +151,7 @@ class ITDBUser: ITDBObject {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
     }
     
-    func login() {
+    func login(completion: @escaping (_ user: ITDBUser) -> Void) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
 
         LoginManager().logIn(readPermissions: [ .publicProfile, .userFriends ], viewController: nil) { loginResult in
@@ -163,12 +163,16 @@ class ITDBUser: ITDBObject {
             case .success( _, _, let accessToken):
                 print("Logged in!")
                 print("ACCESS TOKEN \(accessToken)")
-                self.completeLogin(accessToken: accessToken)
+                self.completeLogin(accessToken: accessToken) {
+                    (result: ITDBUser) in
+                    
+                    completion(result)
+                }
             }
         }
     }
     
-    func completeLogin(accessToken: AccessToken) {
+    func completeLogin(accessToken: AccessToken, completion: @escaping (_ user: ITDBUser) -> Void) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
         MagicalRecord.save({ _ in
@@ -176,9 +180,9 @@ class ITDBUser: ITDBObject {
             if let userId = accessToken.userId {
                 user?.id = userId
             }
-        }) { _ in
-            NotificationCenter.default.post(name: .objectDidLoadId, object: self, userInfo: nil)
-        }
+            
+            completion(user!)
+        })
     }
     
     func loadFriendDetails(with id: String) {
