@@ -120,18 +120,18 @@ class ITDBUser: ITDBObject {
         return user
     }
     
-    func resultsHandler(_ results: [[String : AnyObject]]) {
+    func resultsHandler(_ results: [[String : AnyObject]], completion: @escaping () -> Void) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
 
         MagicalRecord.save({ _ in
             let friends = results.flatMap(self.parse)
             self.friends = Set<ITDBUser>(friends)
         }) { _ in
-            NotificationCenter.default.post(name: .objectDidLoadFriends, object: self, userInfo: nil)
+            completion()
         }
     }
     
-    func loadFriends() {
+    func loadFriends(completion: @escaping () -> Void) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
  
         let profileRequest = ITFBProfileRequest(with: self.graphPath(), requestParameters: self.requestParameters())
@@ -142,7 +142,7 @@ class ITDBUser: ITDBObject {
             case .success(let response):
                 response.dictionaryValue
                     .flatMap { cast($0[ITConstants.FBConstants.kITData]) }
-                    .flatMap { self.resultsHandler($0) }
+                    .flatMap { self.resultsHandler($0) { completion() } }
             case .failed(let error):
                 print("Custom Graph Request Failed: \(error)")
             }
@@ -167,9 +167,7 @@ class ITDBUser: ITDBObject {
             case .success( _, _, let accessToken):
                 print("Logged in!")
                 print("ACCESS TOKEN \(accessToken)")
-                self.completeLogin(accessToken: accessToken) {
-                    (result: ITDBUser) in
-                    
+                self.completeLogin(accessToken: accessToken) { (result: ITDBUser) in
                     completion(result)
                 }
             }
@@ -189,7 +187,7 @@ class ITDBUser: ITDBObject {
         })
     }
     
-    func loadFriendDetails(with id: String) {
+    func loadFriendDetails(with id: String, completion: @escaping () -> Void) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
         let profileRequest = ITFBProfileRequest(with: "/\(id)", requestParameters: self.requestParameters())
@@ -212,7 +210,7 @@ class ITDBUser: ITDBObject {
    
                         self.image = ITDBImage.managedObject(with:imageId ?? "") as? ITDBImage
                     }) { _ in
-                        NotificationCenter.default.post(name: .objectDidUpdateDetails, object: self, userInfo: nil)
+                        completion()
                     }
                 }
             case .failed(let error):

@@ -34,8 +34,6 @@ class ITFriendDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.objectDidUpdateDetails(_:)), name: .objectDidUpdateDetails, object: self.friend)
               
         self.loadFriendDetails()
     }
@@ -50,15 +48,9 @@ class ITFriendDetailViewController: UIViewController {
     private func loadFriendDetails() {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
-        self.friend?.loadFriendDetails(with: self.friend?.id ?? "")
+        self.friend?.loadFriendDetails(with: self.friend?.id ?? "") {
+            self.friendDetailView?.friend = self.friend
+        }
     }
     
-    // MARK: -
-    // MARK: NSNotification
-    
-    @objc private func objectDidUpdateDetails(_ notification: NSNotification) {
-        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-        
-        self.friendDetailView?.friend = self.friend
-    }
 }

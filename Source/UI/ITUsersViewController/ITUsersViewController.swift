@@ -42,9 +42,9 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
         let logoutButton = UIBarButtonItem(title: kITLogoutButtonTitle, style: .plain, target: self, action: #selector(self.onLogOutButtonClicked))
         navigationItem.setLeftBarButton(logoutButton, animated: true)
         
-        self.user?.loadFriends()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.objectDidLoadFriends(_:)), name: .objectDidLoadFriends, object: self.user)
+        self.user?.loadFriends() {
+            self.usersView?.tableView?.reloadData()
+        }
     }
     
     override func awakeFromNib() {
@@ -86,15 +86,6 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         navigationController?.pushViewController(controller, animated: true)
-    }
-    
-    // MARK: -
-    // MARK: NSNotification
-    
-    @objc private func objectDidLoadFriends(_ notification: NSNotification) {
-        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-        
-        self.usersView?.tableView?.reloadData()
     }
     
 }
