@@ -15,26 +15,12 @@ extension Optional {
 }
 
 class ITImageModel: NSObject {
-    
-    let downloadSession = URLSession(configuration: URLSessionConfiguration.ephemeral)
-    
+ 
     var image: UIImage?
     var url: URL
     
     // MARK: -
     // MARK: Class methods
-    
-//    class func model(with url: URL) -> ITImageModel {
-//        let objectCache = ITObjectCache()
-//        var image = objectCache.object(for: url as AnyObject)
-//        
-//        if image.boolValue == nil {
-//            image = self.init(with: url);
-//            objectCache.addObject(image, forKey: url as AnyObject)
-//        }
-//        
-//        return image as! ITImageModel
-//    }
     
     class func model(with url: URL) -> ITImageModel {
         var objectCache = ObjectCache<URL, ITImageModel>()
@@ -62,6 +48,10 @@ class ITImageModel: NSObject {
     
     // MARK: -
     // MARK: Accessors
+    
+    var downloadSession: URLSession {
+        return URLSession(configuration: URLSessionConfiguration.ephemeral)
+    }
     
     var downloadTask: URLSessionDownloadTask? {
         willSet { downloadTask?.cancel() }
@@ -96,34 +86,43 @@ class ITImageModel: NSObject {
     // MARK: -
     // MARK: Public
     
-    func finalizeLoading(with image: UIImage) {
+    func finalizeImageModel(with image: UIImage) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         self.image = image
     }
 
-    func performLoading() {
+    func performLoading(completion: @escaping () -> Void) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         if self.isCached {
-            self.image = UIImage(contentsOfFile: self.fileURL.path)
+            let image = UIImage(contentsOfFile: self.fileURL.path)
+            self.finalizeImageModel(with: image!)
         } else {
-            self.download()
+            self.downloadImage(url: self.url)
         }
+        
+        completion()
     }
     
-    func download() {
-        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-        let urlRequest = URLRequest(url:self.url)
-        self.downloadTask = self.downloadSession.downloadTask(with: urlRequest) { localUrl, response, error in
-            if let localUrl = localUrl, error == nil {
-                if let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                    print("Successfully downloaded. Status code: \(statusCode)")
-                }
+    func getDataFromUrl(url: URL, completion: @escaping (_ url: URL?,
+                                                         _ response: URLResponse?,
+                                                         _ error: Error?) -> Void)
+    {
+        let urlRequest = URLRequest(url:url)
+        self.downloadTask = self.downloadSession.downloadTask(with: urlRequest)
+            { localUrl, response, error in
+                completion(localUrl, response, error)
+            }
+    }
+    
+    func downloadImage(url: URL) {
+        getDataFromUrl(url: url) { (localUrl, response, error)  in
+            guard let localUrl = localUrl, error == nil else { return }
+            DispatchQueue.main.async() { () -> Void in
                 FileManager.default.copyFile(at: localUrl, to: self.fileURL)
                 let image = UIImage(contentsOfFile: self.fileURL.path)
-                self.finalizeLoading(with: image ?? UIImage(named: ITConstants.Default.kITDefaultImageName)!)
-            } else {
-                print("Error while downloading a file")
+                self.finalizeImageModel(with: image ?? UIImage(named: ITConstants.Default.kITDefaultImageName)!)
             }
         }
     }
+
 }

@@ -32,11 +32,11 @@ class ITImageView: ITView {
         }
         
         didSet {
-            self.imageModel?.performLoading()
-            
-            DispatchQueue.main.async {
-                self.contentImageView?.image = self.imageModel?.image
-                self.spinner?.stopAnimating()
+            imageModel?.performLoading() {
+                DispatchQueue.main.async {
+                    self.contentImageView?.image = self.imageModel?.image
+                    self.spinner?.stopAnimating()
+                }
             }
         }
     }

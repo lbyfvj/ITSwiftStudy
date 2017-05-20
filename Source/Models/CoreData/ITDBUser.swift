@@ -108,9 +108,13 @@ class ITDBUser: ITDBObject {
         user?.firstName = cast(object[ITConstants.FBConstants.kITFirstName])
         user?.lastName = cast(object[ITConstants.FBConstants.kITLastName])
         
-        let pictureJSON = object[ITConstants.FBConstants.kITPicture] as? [String: Any]
-        let data = pictureJSON?[ITConstants.FBConstants.kITData] as? [String: Any]
-        let imageId = data.flatMap { _ in String(describing: [ITConstants.FBConstants.kITURL]) }
+        let imageId = object[ITConstants.FBConstants.kITPicture]
+            .flatMap { $0 as? [String: Any] }
+            .flatMap { $0[ITConstants.FBConstants.kITData] }
+            .flatMap { $0 as? [String: Any] }
+            .flatMap { $0[ITConstants.FBConstants.kITURL] }
+            .flatMap { $0 as? String }
+        
         user?.image = ITDBImage.managedObject(with:imageId ?? "") as? ITDBImage
         
         return user
@@ -199,9 +203,13 @@ class ITDBUser: ITDBObject {
                         self.firstName = cast(responseDictionary[ITConstants.FBConstants.kITFirstName])
                         self.lastName = cast(responseDictionary[ITConstants.FBConstants.kITLastName])
                         
-                        let pictureJSON = responseDictionary[ITConstants.FBConstants.kITPicture] as? [String: Any]
-                        let data = pictureJSON?[ITConstants.FBConstants.kITData] as? [String: Any]
-                        let imageId = data.flatMap { _ in String(describing: [ITConstants.FBConstants.kITURL]) }
+                        let imageId = responseDictionary[ITConstants.FBConstants.kITPicture]
+                            .flatMap { $0 as? [String: Any] }
+                            .flatMap { $0[ITConstants.FBConstants.kITData] }
+                            .flatMap { $0 as? [String: Any] }
+                            .flatMap { $0[ITConstants.FBConstants.kITURL] }
+                            .flatMap { $0 as? String }
+   
                         self.image = ITDBImage.managedObject(with:imageId ?? "") as? ITDBImage
                     }) { _ in
                         NotificationCenter.default.post(name: .objectDidUpdateDetails, object: self, userInfo: nil)
