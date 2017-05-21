@@ -17,8 +17,9 @@ class ITFBUserCell: ITTableViewCell {
     // MARK: Public
     
     func fill(with user: ITDBUser) {
-        self.fullNameLabel?.text = user.fullName()
-        self.userImageView?.imageModel = user.image?.imageModel
+        let userViewModel = UserViewModel.init(user: user)
+        self.fullNameLabel?.text = userViewModel.fullName
+        self.userImageView?.imageModel = userViewModel.image?.imageModel
     }
 
 }

@@ -15,11 +15,7 @@ import MagicalRecord
 
 class ITLoginViewController: UIViewController {
     
-    var user: ITDBUser?
-    
-    var accessToken: AccessToken? {
-        return AccessToken.current
-    }
+    var user: UserViewModel?
     
     // MARK: -
     // MARK: Lifecycle
@@ -27,11 +23,14 @@ class ITLoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.user = ITDBUser.user()
-
-        if self.user != nil {
-            self.pushViewController(user: self.user!, animation: false)
+        if let user = ITDBUser.user() {
+            self.user = UserViewModel.init(user: user)
+            self.pushViewController(self.user!, animation: false)
         }
+        
+//        if self.user != nil {
+//            self.pushViewController(self.user!, animation: false)
+//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -42,7 +41,7 @@ class ITLoginViewController: UIViewController {
     // MARK: -
     // MARK: Private
     
-    private func pushViewController(user: ITDBUser, animation: Bool) {
+    private func pushViewController(_ user: UserViewModel, animation: Bool) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
         let controller = ITUsersViewController()
@@ -51,10 +50,6 @@ class ITLoginViewController: UIViewController {
     }
     
     @IBAction private func onLoginButtonClicked(_ sender: Any) {
-        print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
-
-        self.user?.login() { (user:ITDBUser) in
-            self.pushViewController(user: user, animation: true)
-        }
+        self.user?.login() { self.pushViewController($0, animation: true) }
     }
 }

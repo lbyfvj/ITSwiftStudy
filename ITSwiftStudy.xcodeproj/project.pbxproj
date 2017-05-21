@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		931C414A1ECCC98E007EAF61 /* ObjectCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931C41491ECCC98E007EAF61 /* ObjectCache.swift */; };
+		931C414C1ED06F5D007EAF61 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931C414B1ED06F5D007EAF61 /* UserViewModel.swift */; };
+		931C414E1ED1F1AF007EAF61 /* ITFBProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931C414D1ED1F1AF007EAF61 /* ITFBProfileRequest.swift */; };
 		934903CE1EB7CA0500589868 /* ITSwiftStudyApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 934903CC1EB7CA0500589868 /* ITSwiftStudyApp.xcdatamodeld */; };
 		934903D31EB7CAA600589868 /* ITDBImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934903CF1EB7CAA600589868 /* ITDBImage.swift */; };
 		934903D51EB7CAA600589868 /* ITDBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934903D11EB7CAA600589868 /* ITDBUser.swift */; };
@@ -56,6 +58,8 @@
 
 /* Begin PBXFileReference section */
 		931C41491ECCC98E007EAF61 /* ObjectCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectCache.swift; sourceTree = "<group>"; };
+		931C414B1ED06F5D007EAF61 /* UserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		931C414D1ED1F1AF007EAF61 /* ITFBProfileRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITFBProfileRequest.swift; sourceTree = "<group>"; };
 		934903CD1EB7CA0500589868 /* ITSwiftStudyApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ITSwiftStudyApp.xcdatamodel; sourceTree = "<group>"; };
 		934903CF1EB7CAA600589868 /* ITDBImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITDBImage.swift; sourceTree = "<group>"; };
 		934903D11EB7CAA600589868 /* ITDBUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITDBUser.swift; sourceTree = "<group>"; };
@@ -288,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				935A25221EC86DE1004719CC /* ITConstants.swift */,
+				931C414D1ED1F1AF007EAF61 /* ITFBProfileRequest.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -470,6 +475,7 @@
 			isa = PBXGroup;
 			children = (
 				934903CB1EB7C9F900589868 /* CoreData */,
+				931C414B1ED06F5D007EAF61 /* UserViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -651,11 +657,13 @@
 				935A24F31EBB2438004719CC /* ITDispatch+ITExtensions.swift in Sources */,
 				935A24E51EB9CB71004719CC /* ITCompilerMacro.m in Sources */,
 				935A24E61EB9CB71004719CC /* ITMacro.m in Sources */,
+				931C414C1ED06F5D007EAF61 /* UserViewModel.swift in Sources */,
 				935A24C11EB93629004719CC /* ITFBUserCell.swift in Sources */,
 				93B469511EB7C1830080C4F5 /* AppDelegate.swift in Sources */,
 				935A25211EC70E30004719CC /* ITFriendDetailView.swift in Sources */,
 				935A24CC1EB9C77F004719CC /* NSBundle+ITExtensions.m in Sources */,
 				935A24D01EB9C7B0004719CC /* NSArray+ITExtensions.m in Sources */,
+				931C414E1ED1F1AF007EAF61 /* ITFBProfileRequest.swift in Sources */,
 				935A250A1EBE1A86004719CC /* Bundle+ITExtensions.swift in Sources */,
 				935A25001EBE17E8004719CC /* ITView.swift in Sources */,
 				931C414A1ECCC98E007EAF61 /* ObjectCache.swift in Sources */,

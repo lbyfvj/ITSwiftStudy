@@ -94,8 +94,9 @@ class ITImageModel: NSObject {
     func performLoading(completion: @escaping () -> Void) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         if self.isCached {
-            let image = UIImage(contentsOfFile: self.fileURL.path)
-            self.finalizeImageModel(with: image!)
+            if let image = UIImage(contentsOfFile: self.fileURL.path) {
+                self.finalizeImageModel(with: image)
+            }
         } else {
             self.downloadImage(url: self.url)
         }
@@ -119,8 +120,9 @@ class ITImageModel: NSObject {
             guard let localUrl = localUrl, error == nil else { return }
             DispatchQueue.main.async() { () -> Void in
                 FileManager.default.copyFile(at: localUrl, to: self.fileURL)
-                let image = UIImage(contentsOfFile: self.fileURL.path)
-                self.finalizeImageModel(with: image ?? UIImage(named: ITConstants.Default.kITDefaultImageName)!)
+                if let image = UIImage(contentsOfFile: self.fileURL.path) {
+                    self.finalizeImageModel(with: image)
+                }
             }
         }
     }

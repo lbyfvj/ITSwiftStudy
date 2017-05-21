@@ -16,17 +16,19 @@ let kITLogoutButtonTitle = "Logout"
 
 class ITUsersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var user: ITDBUser?
+    var user: UserViewModel?
  
     var usersView: ITUsersView? {
         return cast(self.viewIfLoaded)
     }
     
-    var userFriends: [ITDBUser]? {
-        return (self.user?.friends
-            .flatMap{ $0.flatMap { $0 } })?
-            .sorted{ $0.firstName! < $1.firstName! }
-    }
+//    var userFriends: [ITDBUser]? {
+//        return (self.user?.friends
+//            .flatMap{ $0.flatMap { $0 } })
+//            //.sorted{ $0.firstName! < $1.firstName! }
+//    }
+    
+    
     
     // MARK: -
     // MARK: Lifecycle
@@ -67,12 +69,12 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.userFriends?.count ?? 0
+        return self.user!.userFriends!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ITFBUserCell = tableView.dequeueReusableCell(forIndexPath: indexPath as NSIndexPath)
-        if let user = self.userFriends?[indexPath.row] {
+        if let user = self.user?.userFriends?[indexPath.row] {
             cell.fill(with: user)
         }
         
@@ -81,7 +83,7 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let controller = ITFriendDetailViewController()
-        if let friend = self.userFriends?[indexPath.row] {
+        if let friend = self.user?.userFriends?[indexPath.row] {
             controller.friend = friend
         }
         

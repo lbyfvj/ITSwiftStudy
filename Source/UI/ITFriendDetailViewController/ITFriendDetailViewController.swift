@@ -48,7 +48,8 @@ class ITFriendDetailViewController: UIViewController {
     private func loadFriendDetails() {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
-        self.friend?.loadFriendDetails(with: self.friend?.id ?? "") {
+        let friend = UserViewModel.init(user: self.friend!)
+        friend.loadFriendDetails(with: self.friend?.id ?? "") {
             self.friendDetailView?.friend = self.friend
         }
     }
