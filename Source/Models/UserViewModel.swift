@@ -16,7 +16,7 @@ import IDPCastable
 
 import SwiftyJSON
 
-struct UserViewModel {
+class UserViewModel {
     
     typealias Facebook = Constants.Facebook
     
@@ -73,8 +73,6 @@ struct UserViewModel {
             case .cancelled:
                 print("User cancelled login.")
             case .success( _, _, let accessToken):
-                print("Logged in!")
-                print("ACCESS TOKEN \(accessToken)")
                 self.completeLogin(accessToken: accessToken) { completion($0) }
             }
         }
@@ -96,13 +94,12 @@ struct UserViewModel {
         print("\(String(describing: type(of: self))) - \(NSStringFromSelector(#function))")
         
         let json = JSON(object as Any)
-        let user = cast(object[Facebook.id]).flatMap { ITDBUser.user(with: $0) }
-
+        let user = json[Facebook.id].string
+            .flatMap { ITDBUser.user(with: $0) }
         user?.firstName = json[Facebook.firstName].string
         user?.lastName = json[Facebook.lastName].string
-        
-        let imageId = json[Facebook.picture][Facebook.data][Facebook.url].string
-        user?.image = ITDBImage.managedObject(with:imageId ?? "") as? ITDBImage
+        user?.image = json[Facebook.picture][Facebook.data][Facebook.url].string
+            .flatMap { ITDBImage.managedObject(with: $0) as? ITDBImage }
         
         return user
     }
@@ -143,7 +140,7 @@ struct UserViewModel {
         print("\(String(describing: type(of: self))) - \(NSStringFromSelector(#function))")
     }
     
-    func loadFriendDetails(with id: String, completion: @escaping () -> Void) {        
+    func loadFriendDetails(with id: String, completion: @escaping () -> Void) {
         let profileRequest = ITFBProfileRequest(with: "/\(id)", requestParameters: self.requestParameters())
         let connection = GraphRequestConnection()
         
@@ -151,15 +148,10 @@ struct UserViewModel {
             switch result {
             case .success(let response):
                 if let responseDictionary = response.dictionaryValue {
-                    MagicalRecord.save({ _ in
-                        let json = JSON(responseDictionary as Any)
-                        
-                        self.user.firstName = json[Facebook.firstName].string
-                        self.user.lastName = json[Facebook.lastName].string
-                        
-                        let imageId = json[Facebook.picture][Facebook.data][Facebook.url].string
-                        
-                        self.user.image = ITDBImage.managedObject(with:imageId ?? "") as? ITDBImage
+                    MagicalRecord.save({ [weak self] _ in
+                        if let user = self?.parse(object: responseDictionary as [String : AnyObject]) {
+                            self?.user = user
+                        }
                     }) { _ in
                         completion()
                     }
