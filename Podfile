@@ -9,4 +9,5 @@ target 'ITSwiftStudy' do
 	pod 'FacebookShare', :git => 'https://github.com/facebook/facebook-sdk-swift'
 	pod 'MagicalRecord'
 	pod "IDPCastable"
+	pod 'SwiftyJSON'
 end

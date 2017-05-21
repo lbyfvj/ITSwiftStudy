@@ -28,6 +28,7 @@ PODS:
   - MagicalRecord (2.3.2):
     - MagicalRecord/Core (= 2.3.2)
   - MagicalRecord/Core (2.3.2)
+  - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - FacebookCore (from `https://github.com/facebook/facebook-sdk-swift`)
@@ -35,6 +36,7 @@ DEPENDENCIES:
   - FacebookShare (from `https://github.com/facebook/facebook-sdk-swift`)
   - IDPCastable
   - MagicalRecord
+  - SwiftyJSON
 
 EXTERNAL SOURCES:
   FacebookCore:
@@ -65,7 +67,8 @@ SPEC CHECKSUMS:
   FBSDKShareKit: 21ab3c8d173f4fa20c47c1061f3a9fac5950b5fa
   IDPCastable: 15051ffccffca8408dd633fbc2a19584e2e11e9c
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 98887c812227ec64d564c155ac0575f238f766ca
+PODFILE CHECKSUM: fcd22120f5f294ff1260961e17c1829c163935ad
 
 COCOAPODS: 1.1.1

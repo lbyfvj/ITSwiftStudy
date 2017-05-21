@@ -14,6 +14,8 @@ import FacebookCore
 import MagicalRecord
 import IDPCastable
 
+import SwiftyJSON
+
 struct UserViewModel {
     
     var user: ITDBUser
@@ -89,17 +91,15 @@ struct UserViewModel {
     }
     
     func parse(object: [String : AnyObject]) -> ITDBUser? {
+        print("\(String(describing: type(of: self))) - \(NSStringFromSelector(#function))")
+        
+        let json = JSON(object as Any)
         let user = cast(object[ITConstants.FBConstants.kITId]).flatMap { ITDBUser.user(with: $0) }
-        user?.firstName = cast(object[ITConstants.FBConstants.kITFirstName])
-        user?.lastName = cast(object[ITConstants.FBConstants.kITLastName])
+
+        user?.firstName = json[ITConstants.FBConstants.kITFirstName].string
+        user?.lastName = json[ITConstants.FBConstants.kITLastName].string
         
-        let imageId = object[ITConstants.FBConstants.kITPicture]
-            .flatMap { $0 as? [String: Any] }
-            .flatMap { $0[ITConstants.FBConstants.kITData] }
-            .flatMap { $0 as? [String: Any] }
-            .flatMap { $0[ITConstants.FBConstants.kITURL] }
-            .flatMap { $0 as? String }
-        
+        let imageId = json[ITConstants.FBConstants.kITPicture][ITConstants.FBConstants.kITData][ITConstants.FBConstants.kITURL].string
         user?.image = ITDBImage.managedObject(with:imageId ?? "") as? ITDBImage
         
         return user
@@ -117,6 +117,8 @@ struct UserViewModel {
     }
     
     func loadFriends(completion: @escaping () -> Void) {
+        print("\(String(describing: type(of: self))) - \(NSStringFromSelector(#function))")
+        
         let profileRequest = ITFBProfileRequest(with: self.graphPath(), requestParameters: self.requestParameters())
         let connection = GraphRequestConnection()
         
@@ -126,6 +128,7 @@ struct UserViewModel {
                 response.dictionaryValue
                     .flatMap { cast($0[ITConstants.FBConstants.kITData]) }
                     .flatMap { self.resultsHandler($0) { completion() } }
+                
             case .failed(let error):
                 print("Custom Graph Request Failed: \(error)")
             }
@@ -147,15 +150,12 @@ struct UserViewModel {
             case .success(let response):
                 if let responseDictionary = response.dictionaryValue {
                     MagicalRecord.save({ _ in
-                        self.user.firstName = cast(responseDictionary[ITConstants.FBConstants.kITFirstName])
-                        self.user.lastName = cast(responseDictionary[ITConstants.FBConstants.kITLastName])
+                        let json = JSON(responseDictionary as Any)
                         
-                        let imageId = responseDictionary[ITConstants.FBConstants.kITPicture]
-                            .flatMap { $0 as? [String: Any] }
-                            .flatMap { $0[ITConstants.FBConstants.kITData] }
-                            .flatMap { $0 as? [String: Any] }
-                            .flatMap { $0[ITConstants.FBConstants.kITURL] }
-                            .flatMap { $0 as? String }
+                        self.user.firstName = json[ITConstants.FBConstants.kITFirstName].string
+                        self.user.lastName = json[ITConstants.FBConstants.kITLastName].string
+                        
+                        let imageId = json[ITConstants.FBConstants.kITPicture][ITConstants.FBConstants.kITData][ITConstants.FBConstants.kITURL].string
                         
                         self.user.image = ITDBImage.managedObject(with:imageId ?? "") as? ITDBImage
                     }) { _ in
