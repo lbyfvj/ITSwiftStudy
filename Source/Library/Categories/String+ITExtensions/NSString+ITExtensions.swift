@@ -12,7 +12,8 @@ public extension String {
     
     public func alphanumeriPercentEncoded() -> String {
         let alphanumericCharacterSet = CharacterSet.alphanumerics
-        
-        return self.addingPercentEncoding(withAllowedCharacters: alphanumericCharacterSet)!
+
+        return self
+            .addingPercentEncoding(withAllowedCharacters: alphanumericCharacterSet) ?? ""
     }
 }

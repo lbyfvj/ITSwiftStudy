@@ -27,10 +27,6 @@ class ITLoginViewController: UIViewController {
             self.user = UserViewModel.init(user: user)
             self.pushViewController(self.user!, animation: false)
         }
-        
-//        if self.user != nil {
-//            self.pushViewController(self.user!, animation: false)
-//        }
     }
     
     override func didReceiveMemoryWarning() {

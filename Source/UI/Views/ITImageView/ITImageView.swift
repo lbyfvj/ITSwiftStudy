@@ -18,7 +18,7 @@ class ITImageView: ITView {
         }
         
         didSet {
-            self.addSubview(contentImageView!)
+            self.addSubview(contentImageView ?? UIImageView())
         }
     }
     
@@ -55,8 +55,8 @@ class ITImageView: ITView {
         
     }
     
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     override func awakeFromNib() {

@@ -19,6 +19,7 @@ import SwiftyJSON
 class UserViewModel {
     
     typealias Facebook = Constants.Facebook
+    typealias JsonObject = [String : AnyObject]
     
     var user: ITDBUser
     
@@ -90,7 +91,7 @@ class UserViewModel {
         })
     }
     
-    func parse(object: [String : AnyObject]) -> ITDBUser? {
+    func parse(object: JsonObject) -> ITDBUser? {
         print("\(String(describing: type(of: self))) - \(NSStringFromSelector(#function))")
         
         let json = JSON(object as Any)
@@ -104,7 +105,7 @@ class UserViewModel {
         return user
     }
     
-    func resultsHandler(_ results: [[String : AnyObject]], completion: @escaping () -> Void) {
+    func resultsHandler(_ results: [JsonObject], completion: @escaping () -> Void) {
         print("\(String(describing: type(of: self))) - \(NSStringFromSelector(#function))")
         
         MagicalRecord.save({ _ in
@@ -140,7 +141,7 @@ class UserViewModel {
         print("\(String(describing: type(of: self))) - \(NSStringFromSelector(#function))")
     }
     
-    func loadFriendDetails(with id: String, completion: @escaping () -> Void) {
+    func loadUserDetails(with id: String, completion: @escaping () -> Void) {
         let profileRequest = ITFBProfileRequest(with: "/\(id)", requestParameters: self.requestParameters())
         let connection = GraphRequestConnection()
         
@@ -149,7 +150,7 @@ class UserViewModel {
             case .success(let response):
                 if let responseDictionary = response.dictionaryValue {
                     MagicalRecord.save({ [weak self] _ in
-                        if let user = self?.parse(object: responseDictionary as [String : AnyObject]) {
+                        if let user = self?.parse(object: responseDictionary as JsonObject) {
                             self?.user = user
                         }
                     }) { _ in

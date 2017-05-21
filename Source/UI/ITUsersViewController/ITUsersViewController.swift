@@ -59,7 +59,9 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.user!.userFriends!.count
+        return self.user
+            .flatMap { $0.userFriends }?
+            .count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

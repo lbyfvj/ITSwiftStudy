@@ -35,7 +35,7 @@ class ITFriendDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
               
-        self.loadFriendDetails()
+        self.loadUserDetails()
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,11 +45,11 @@ class ITFriendDetailViewController: UIViewController {
     // MARK: -
     // MARK: Private
     
-    private func loadFriendDetails() {
+    private func loadUserDetails() {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         
         let friend = UserViewModel.init(user: self.friend!)
-        friend.loadFriendDetails(with: self.friend?.id ?? "") {
+        friend.loadUserDetails(with: self.friend?.id ?? "") {
             self.friendDetailView?.friend = self.friend
         }
     }
