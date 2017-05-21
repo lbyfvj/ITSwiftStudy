@@ -18,6 +18,8 @@ import SwiftyJSON
 
 struct UserViewModel {
     
+    typealias Facebook = Constants.Facebook
+    
     var user: ITDBUser
     
     var id: String {
@@ -49,11 +51,11 @@ struct UserViewModel {
     // MARK: Accessors
     
     func graphPath() -> String {
-        return "\(String(describing: self.id ))/\(ITConstants.FBConstants.kITFriends)"
+        return "\(String(describing: self.id ))/\(Facebook.friends)"
     }
     
     func requestParameters() -> [String: Any] {
-        return [ITConstants.FBConstants.kITFields: "\(ITConstants.FBConstants.kITId), \(ITConstants.FBConstants.kITFirstName), \(ITConstants.FBConstants.kITLastName), \(ITConstants.FBConstants.kITLargePicture)"]
+        return [Facebook.fields: "\(Facebook.id), \(Facebook.firstName), \(Facebook.lastName), \(Facebook.largePicture)"]
     }
     
     func graphRequest() -> GraphRequest {
@@ -94,12 +96,12 @@ struct UserViewModel {
         print("\(String(describing: type(of: self))) - \(NSStringFromSelector(#function))")
         
         let json = JSON(object as Any)
-        let user = cast(object[ITConstants.FBConstants.kITId]).flatMap { ITDBUser.user(with: $0) }
+        let user = cast(object[Facebook.id]).flatMap { ITDBUser.user(with: $0) }
 
-        user?.firstName = json[ITConstants.FBConstants.kITFirstName].string
-        user?.lastName = json[ITConstants.FBConstants.kITLastName].string
+        user?.firstName = json[Facebook.firstName].string
+        user?.lastName = json[Facebook.lastName].string
         
-        let imageId = json[ITConstants.FBConstants.kITPicture][ITConstants.FBConstants.kITData][ITConstants.FBConstants.kITURL].string
+        let imageId = json[Facebook.picture][Facebook.data][Facebook.url].string
         user?.image = ITDBImage.managedObject(with:imageId ?? "") as? ITDBImage
         
         return user
@@ -126,7 +128,7 @@ struct UserViewModel {
             switch result {
             case .success(let response):
                 response.dictionaryValue
-                    .flatMap { cast($0[ITConstants.FBConstants.kITData]) }
+                    .flatMap { cast($0[Facebook.data]) }
                     .flatMap { self.resultsHandler($0) { completion() } }
                 
             case .failed(let error):
@@ -152,10 +154,10 @@ struct UserViewModel {
                     MagicalRecord.save({ _ in
                         let json = JSON(responseDictionary as Any)
                         
-                        self.user.firstName = json[ITConstants.FBConstants.kITFirstName].string
-                        self.user.lastName = json[ITConstants.FBConstants.kITLastName].string
+                        self.user.firstName = json[Facebook.firstName].string
+                        self.user.lastName = json[Facebook.lastName].string
                         
-                        let imageId = json[ITConstants.FBConstants.kITPicture][ITConstants.FBConstants.kITData][ITConstants.FBConstants.kITURL].string
+                        let imageId = json[Facebook.picture][Facebook.data][Facebook.url].string
                         
                         self.user.image = ITDBImage.managedObject(with:imageId ?? "") as? ITDBImage
                     }) { _ in

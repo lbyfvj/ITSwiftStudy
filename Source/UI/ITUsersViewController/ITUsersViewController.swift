@@ -22,14 +22,6 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
         return cast(self.viewIfLoaded)
     }
     
-//    var userFriends: [ITDBUser]? {
-//        return (self.user?.friends
-//            .flatMap{ $0.flatMap { $0 } })
-//            //.sorted{ $0.firstName! < $1.firstName! }
-//    }
-    
-    
-    
     // MARK: -
     // MARK: Lifecycle
     
@@ -44,9 +36,7 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
         let logoutButton = UIBarButtonItem(title: kITLogoutButtonTitle, style: .plain, target: self, action: #selector(self.onLogOutButtonClicked))
         navigationItem.setLeftBarButton(logoutButton, animated: true)
         
-        self.user?.loadFriends() {
-            self.usersView?.tableView?.reloadData()
-        }
+        self.user?.loadFriends() { self.usersView?.tableView?.reloadData() }
     }
     
     override func awakeFromNib() {

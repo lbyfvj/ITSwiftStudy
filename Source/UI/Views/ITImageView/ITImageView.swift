@@ -34,7 +34,7 @@ class ITImageView: ITView {
         didSet {
             imageModel?.performLoading() {
                 DispatchQueue.main.async {
-                    self.contentImageView?.image = self.imageModel?.image ?? UIImage(named: ITConstants.Default.kITDefaultImageName)
+                    self.contentImageView?.image = self.imageModel?.image ?? UIImage(named: Constants.Default.defaultImageName)
                     self.spinner?.stopAnimating()
                 }
             }
