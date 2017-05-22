@@ -104,7 +104,7 @@ class UserViewModel {
         user?.firstName = json[Facebook.firstName].string
         user?.lastName = json[Facebook.lastName].string
         user?.image = json[Facebook.picture][Facebook.data][Facebook.url].string
-            .flatMap { ITDBImage.managedObject(with: $0) as? ITDBImage }
+            .flatMap { ITDBImage.managedObject(with: $0) }
         
         return user
     }

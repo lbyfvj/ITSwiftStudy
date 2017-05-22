@@ -54,7 +54,7 @@ class ITImageView: ITView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        if self.contentImageView.boolValue {
+        if !self.contentImageView.boolValue {
             self.initSubviews()
         }
     }
