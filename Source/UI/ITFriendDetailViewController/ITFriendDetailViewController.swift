@@ -22,11 +22,7 @@ class ITFriendDetailViewController: UIViewController {
     }
         
     var friend: ITDBUser? {
-        didSet {
-            if self.isViewLoaded {
-                self.friendDetailView?.friend = friend
-            }
-        }
+        didSet { self.friendDetailView?.friend = friend }
     }
     
     // MARK: -

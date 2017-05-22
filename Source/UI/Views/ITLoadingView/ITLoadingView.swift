@@ -10,8 +10,10 @@ import UIKit
 
 class ITLoadingView: UIView {
     
-    private let kITLoadingDuration: TimeInterval = 1
-    private let kITAlpha: CGFloat = 0.5
+    struct Animation {
+        static let duration: TimeInterval = 1
+        static let alpha: CGFloat = 1.0
+    }
     
     @IBOutlet public var spinner: UIActivityIndicatorView? {
         didSet {
@@ -22,7 +24,7 @@ class ITLoadingView: UIView {
         }
     }
     
-    private var _visible: Bool = true
+    private var _visible: Bool = false
     
     public var visible: Bool {
         get { return self._visible }
@@ -34,12 +36,12 @@ class ITLoadingView: UIView {
     // MARK: Class Methods
     
     class func view(onSuperView superView: UIView) -> ITLoadingView {
-        let view: ITLoadingView? = Bundle.object(with: self)
-        view?.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        view?.frame = superView.bounds
-        view?.alpha = 0.0
+        let view = Bundle.object(type: self) ?? ITLoadingView.init(frame: superView.bounds)
+        view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        view.frame = superView.bounds
+        view.alpha = 0.0
         
-        return view!
+        return view
     }
     
     // MARK: -
@@ -66,18 +68,18 @@ class ITLoadingView: UIView {
     // MARK: Accessors
     
     func set(visible: Bool) {
-        set(visible: visible, animated: false)
+        self.set(visible: visible, animated: true)
     }
     
     func set(visible: Bool, animated: Bool) {
-        set(visible: visible, animated: animated, completionHandler: {})
+        self.set(visible: visible, animated: animated, completionHandler: {})
     }
     
     func set(visible: Bool, animated: Bool, completionHandler: () -> Void) {
-        superview?.bringSubview(toFront: self)
+        self.superview?.bringSubview(toFront: self)
         UIView.animate(
-            withDuration: animated ? kITLoadingDuration : 0,
-            animations: { self.alpha = visible ? self.kITAlpha : 0.0 },
+            withDuration: animated ? Animation.duration : 0,
+            animations: { self.alpha = visible ? Animation.alpha : 0.0 },
             completion: { _ in self._visible = visible }
         )
     }

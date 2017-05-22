@@ -13,22 +13,15 @@ class ITImageView: ITView {
     @IBOutlet var spinner: UIActivityIndicatorView?
     
     @IBOutlet var contentImageView: UIImageView? {
-        willSet {
-            self.contentImageView?.removeFromSuperview()
-        }
-        
-        didSet {
-            self.addSubview(contentImageView ?? UIImageView())
-        }
+        willSet { contentImageView?.removeFromSuperview() }
+        didSet { contentImageView.map(self.addSubview) }
     }
     
     var imageModel: ITImageModel? {
         willSet {
             self.contentImageView?.image = nil
             
-            DispatchQueue.main.async {
-                self.spinner?.startAnimating()
-            }
+            DispatchQueue.main.async { self.spinner?.startAnimating() }
         }
         
         didSet {
@@ -52,7 +45,6 @@ class ITImageView: ITView {
         super.init(frame: frame)
         
         self.initSubviews()
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,12 +54,15 @@ class ITImageView: ITView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.initSubviews()
+        if self.contentImageView.boolValue {
+            self.initSubviews()
+        }
     }
     
     func initSubviews() {
         let imageView = UIImageView(frame: bounds)
         imageView.autoresizingMask = [.flexibleLeftMargin, .flexibleWidth, .flexibleHeight]
+        
         self.contentImageView = imageView
     }
 }

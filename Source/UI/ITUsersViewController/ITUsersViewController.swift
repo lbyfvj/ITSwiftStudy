@@ -66,7 +66,7 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ITFBUserCell = tableView.dequeueReusableCell(forIndexPath: indexPath as NSIndexPath)
-        if let user = self.user?.userFriends?[indexPath.row] {
+        if let user = self.user?.userFriends[indexPath.row] {
             cell.fill(with: user)
         }
         
@@ -75,11 +75,11 @@ class ITUsersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let controller = ITFriendDetailViewController()
-        if let friend = self.user?.userFriends?[indexPath.row] {
+        if let friend = self.user?.userFriends[indexPath.row] {
             controller.friend = friend
         }
         
-        navigationController?.pushViewController(controller, animated: true)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
 }

@@ -11,21 +11,30 @@ import UIKit
 import MagicalRecord
 import CoreData
 
-public class ITDBObject: NSManagedObject {
+protocol Inittable {
+    init()
+}
+
+public class ITDBObject: NSManagedObject, Inittable {
     
     var id = ""
     
     // MARK: -
     // MARK: Class Methods
     
-    class func managedObject(with ID: String) -> ITDBObject {
+    class func managedObject<T: Inittable>(with ID: String) -> T
+        where
+            T: Inittable,
+            T: ITDBObject
+    {
         let context = NSManagedObjectContext.mr_default()
         let predicate = NSPredicate(format: "self.id like %@", ID)
         let objects = self
             .mr_findAll(with: predicate, in: context)
-            .flatMap { $0.flatMap { $0 as? ITDBObject } }
+            .flatMap { $0.flatMap { $0 as? T } }
+            ?? []
         
-        let result: ITDBObject = objects?.first ?? self.mr_createEntity(in: context) ?? ITDBObject()
+        let result = objects.first ?? T.mr_createEntity(in: context) ?? T()
         result.id = ID
         
         return result

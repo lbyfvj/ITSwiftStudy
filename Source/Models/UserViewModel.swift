@@ -28,17 +28,21 @@ class UserViewModel {
     }
 
     var fullName: String {
-        return "\(String(describing: user.firstName ?? "")) \(String(describing: user.lastName ?? ""))"
+        return "\(user.firstName ?? "") \(user.lastName ?? "")"
     }
     
     var image: ITDBImage? {
         return self.user.image
     }
     
-    var userFriends: [ITDBUser]? {
-        return (self.user.friends
-            .flatMap{ $0.flatMap { $0 } })?
-            .sorted{ $0.firstName! < $1.firstName! }
+    var userFriends: [ITDBUser] {
+        return (self.user.friends.map(Array.init) ?? [])
+            .sorted { lhs, rhs in
+                lhs.firstName.flatMap { lhs in
+                    rhs.firstName.flatMap { lhs > $0 }
+                }
+                ?? false
+            }
     }
     
     // MARK: -
@@ -52,7 +56,7 @@ class UserViewModel {
     // MARK: Accessors
     
     func graphPath() -> String {
-        return "\(String(describing: self.id ))/\(Facebook.friends)"
+        return "\(self.id)/\(Facebook.friends)"
     }
     
     func requestParameters() -> [String: Any] {
@@ -60,7 +64,7 @@ class UserViewModel {
     }
     
     func graphRequest() -> GraphRequest {
-        return GraphRequest(graphPath: graphPath(), parameters: requestParameters())
+        return GraphRequest(graphPath: self.graphPath(), parameters: self.requestParameters())
     }
     
     // MARK: -

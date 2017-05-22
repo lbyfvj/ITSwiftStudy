@@ -13,10 +13,12 @@ public extension Array {
     // MARK: -
     // MARK: Public
     
-    public func object<T>(of type: T.Type) -> T? {
-        
+    public func objects<T>(of type: T.Type) -> [T] {
         return self.flatMap { $0 as? T }
-            .first
+    }
+    
+    public func object<T>(of type: T.Type) -> T? {
+        return self.objects(of: T.self).first
     }
     
 }

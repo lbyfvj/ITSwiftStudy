@@ -8,17 +8,20 @@
 
 import Foundation
 
+import IDPCastable
+
 public extension UIView {
     
     public class func instantiateFromNibWithView<T: UIView>(viewType: T.Type) -> T? {
         return Bundle
             .main
             .loadNibNamed(String(describing: viewType), owner: nil, options: nil)?
-            .first as? T
+            .first
+            .flatMap(cast)
     }
     
     public class func instantiateFromNib() -> Self? {
-        return instantiateFromNibWithView(viewType: self)
+        return self.instantiateFromNibWithView(viewType: self)
     }
     
 }

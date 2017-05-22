@@ -26,19 +26,14 @@ class ITDBUser: ITDBObject {
     // MARK: Class Methods
     
     class func user() -> ITDBUser? {
-        if let accessToken = AccessToken.current {
-            let user = ITDBUser.managedObject(with: accessToken.userId ?? "")
-            
-            return user as? ITDBUser
-        }
-
-        return nil
+        
+        return AccessToken.current
+            .flatMap { $0.userId }
+            .map(self.managedObject)
     }
     
     class func user(with id: String) -> ITDBUser? {
-        let user = ITDBUser.managedObject(with: id)
-        
-        return user as? ITDBUser
+        return self.managedObject(with: id)
     }
     
 }

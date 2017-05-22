@@ -18,7 +18,9 @@ class ITFriendDetailView: ITView {
     var friend: ITDBUser? {
         willSet { self.loadingViewVisible = true }
         didSet {
-            self.fill(with: friend!)
+            if friend != oldValue {
+                friend.map(self.fill)
+            }
             self.loadingViewVisible = false
         }
     }

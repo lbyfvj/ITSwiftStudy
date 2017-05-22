@@ -14,19 +14,20 @@ extension Optional {
     }
 }
 
-class ITImageModel: NSObject {
+class ITImageModel {
  
+    static var cache = ObjectCache<URL, ITImageModel>()
+    
     var image: UIImage?
-    var url: URL
+    let url: URL
     
     // MARK: -
     // MARK: Class methods
     
     class func model(with url: URL) -> ITImageModel {
-        var objectCache = ObjectCache<URL, ITImageModel>()
-        let image = objectCache.object(for: url) ?? self.init(with: url)
+        let image = cache.object(for: url) ?? self.init(with: url)
         
-        objectCache[url] = image
+        cache[url] = image
         
         return image
     }
@@ -35,14 +36,12 @@ class ITImageModel: NSObject {
     // MARK: Initializations and Deallocations
     
     deinit {
-        defer { downloadTask = nil }
+        self.downloadSession.invalidateAndCancel()
     }
     
-    required init(with url: URL) {
+    internal required init(with url: URL) {
         self.url = url
-        
-        super.init()
-        
+
         try? FileManager.default.createDirectory(atPath: self.filePath, withIntermediateDirectories: true, attributes: nil)
     }
     
@@ -86,7 +85,7 @@ class ITImageModel: NSObject {
     // MARK: -
     // MARK: Public
     
-    func finalizeImageModel(with image: UIImage) {
+    func finalizeImageModel(with image: UIImage?) {
         print("\(NSStringFromClass(type(of: self))) - \(NSStringFromSelector(#function))")
         self.image = image
     }
@@ -116,7 +115,7 @@ class ITImageModel: NSObject {
     }
     
     func downloadImage(url: URL) {
-        getDataFromUrl(url: url) { (localUrl, response, error)  in
+        self.getDataFromUrl(url: url) { (localUrl, response, error)  in
             guard let localUrl = localUrl, error == nil else { return }
             DispatchQueue.main.async() { () -> Void in
                 FileManager.default.copyFile(at: localUrl, to: self.fileURL)

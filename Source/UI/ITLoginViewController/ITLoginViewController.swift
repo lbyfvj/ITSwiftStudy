@@ -25,7 +25,7 @@ class ITLoginViewController: UIViewController {
         
         if let user = ITDBUser.user() {
             self.user = UserViewModel.init(user: user)
-            self.pushViewController(self.user!, animation: false)
+            self.user.map { self.pushViewController($0, animation: false) }
         }
     }
     
@@ -42,7 +42,7 @@ class ITLoginViewController: UIViewController {
         
         let controller = ITUsersViewController()
         controller.user = self.user
-        navigationController?.pushViewController(controller, animated: animation)
+        self.navigationController?.pushViewController(controller, animated: animation)
     }
     
     @IBAction private func onLoginButtonClicked(_ sender: Any) {

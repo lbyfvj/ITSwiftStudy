@@ -10,24 +10,26 @@ import Foundation
 
 extension FileManager {
     
-    static var documentsDirectoryURL: URL {
-        return self.url(for: .documentDirectory)
-    }
+    static let documentsDirectoryURL = {
+        return FileManager.url(for: .documentDirectory)
+    }()
     
-    static var libraryDirectoryURL: URL {
-        return self.url(for: .libraryDirectory)
-    }
+    static let libraryDirectoryURL = {
+        return FileManager.url(for: .libraryDirectory)
+    }()
     
-    static var applicationDirectoryURL: URL {
-        return self.url(for: .applicationSupportDirectory)
-    }
+    static let applicationDirectoryURL = {
+        return FileManager.url(for: .applicationSupportDirectory)
+    }()
     
     static func url(for searchPath: FileManager.SearchPathDirectory) -> URL {
         let result = try? FileManager.default
-            .url(for: searchPath,
-                 in: .userDomainMask,
-                 appropriateFor: nil,
-                 create: true)
+            .url(
+                for: searchPath,
+                in: .userDomainMask,
+                appropriateFor: nil,
+                create: true
+        )
         
         return result ?? URL(fileURLWithPath: "")
     }
@@ -35,20 +37,15 @@ extension FileManager {
     func createDirectory(at url: URL) {
         if url.isFileURL {
             let path: String = url.path
-            if !fileExists(atPath: path) {
+            if !self.fileExists(atPath: path) {
                 try? self.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
             }
         }
     }
     
     func copyFile(at url: URL, to toURL: URL) {
-        self.createDirectory(at: toURL.deletingLastPathComponent())
-        
-        do {
-            try self.copyItem(at: url, to: toURL)
-        } catch (let writeError) {
-            print("Error creating a file \(toURL) : \(writeError)")
-        }
+        self.createDirectory(at: toURL.deletingLastPathComponent())        
+        try? self.copyItem(at: url, to: toURL)
     }
     
 }
